@@ -27,8 +27,14 @@ from llama_index.llms.azure_openai import AzureOpenAI
 from llama_index.embeddings.azure_openai import AzureOpenAIEmbedding
 from llama_index.core.node_parser import SentenceSplitter
 
+from login_to_azure_cognitive_services import select_credential
+
 print("Loading environment variables from .env file")
 load_dotenv()
+
+print("Authenticate User & Login to Azure Cognitive Services")
+credential = select_credential(weblogin='advanced', allow_unencrypted_storage=True, credential_path="azure_credential.json")
+token_provider = credential.get_login_token_to_azure_cognitive_services()
 
 #######################################################
 # RAG involves the following high-level steps:
@@ -62,13 +68,14 @@ embed_model = AzureOpenAIEmbedding(
     model="text-embedding-ada-002",
     deployment_name="text-embedding-ada-002",
     azure_endpoint=os.getenv("AZURE_OPENAI_SODA_FR_ENDPOINT"),
-    api_key=os.getenv("AZURE_OPENAI_SODA_FR_KEY"),
+    # use_azure_ad=True, # only useful for debugging purposes?
+    api_key=token_provider(),
     api_version="2023-07-01-preview"
 )
 # Alternative: Use HuggingFace Embeddings locally(!!) with llama.index instead of the default embedding-ada-002?
 # The following requires on my machine >1.5 GB disk space:
 # !pip install llama-index-embeddings-huggingface
-# from llama_index.embeddings.huggingface import HuggingFaceEmbedding (more than 1.5GB disk space needed)
+# from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 # embed_model = HuggingFaceEmbedding(
 #     model_name="BAAI/bge-small-en-v1.5"
 # )
@@ -76,7 +83,10 @@ embed_model = AzureOpenAIEmbedding(
 llm = AzureOpenAI(
     engine="gpt-35-turbo-1106", model="gpt-35-turbo-16k", temperature=0.0,
     azure_endpoint=os.getenv("AZURE_OPENAI_SODA_FR_ENDPOINT"),
-    api_key=os.getenv("AZURE_OPENAI_SODA_FR_KEY"),
+    # use_azure_ad=True, # only useful for debugging purposes?
+    api_key=token_provider(),
+    # azure_ad_token_provider=token_provider,
+    # azure_ad_token=token_provider(),
     api_version="2023-07-01-preview"
 )
 
