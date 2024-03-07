@@ -7,8 +7,13 @@ from openai import AzureOpenAI
 #     from Azure_Authentication.login_to_azure_cognitive_services import select_credential
 from Azure_Authentication.login_to_azure_cognitive_services import select_credential
 
-print("Loading environment variables from .env file")
+# Loading environment variables from .env file
 load_dotenv()
+
+# Choose the OpenAI model you want to use.
+# The model name selected here most match a deployment name from your OpenAI subscription.
+# The deployment needs to be available in the region set by os.environ["AZURE_OPENAI_REGIONAL_ENDPOINT"]
+DEPLOYMENT_NAME = "gpt-35-turbo-1106"
 
 print("Authenticate User & Login to Azure Cognitive Services")
 # ToDO variable validation & use .envs 
@@ -28,7 +33,7 @@ print("Instantiate Azure OpenAI Client")
 # - pass 'token_provider()' as an argument to 'azure_ad_token'
 # - pass 'token_provider' as an argument to 'azure_ad_token_provider'
 client = AzureOpenAI(
-    azure_endpoint=os.environ["AZURE_OPENAI_SODA_FR_ENDPOINT"],
+    azure_endpoint=os.environ["AZURE_OPENAI_REGIONAL_ENDPOINT"],
     api_key=token_provider(),  # alternative: insert os.environ["AZURE_OPENAI_SODA_FR_KEY"],
     # azure_ad_token=token_provider(),  # same outcome
     # azure_ad_token_provider=token_provider, # same outcome again
@@ -37,7 +42,7 @@ client = AzureOpenAI(
 
 print("A simple call to the OpenAI API")
 response = client.chat.completions.create(
-    model=os.environ["AZURE_OPENAI_SODA_DEPLOYMENT_NAME"],  # model = "deployment_name"
+    model=DEPLOYMENT_NAME,  # model = "deployment_name"
     messages=[
         {"role": "system", "content": "You are a helpful assistant."},
         {"role": "user", "content": "Does Azure OpenAI support customer managed keys?"},

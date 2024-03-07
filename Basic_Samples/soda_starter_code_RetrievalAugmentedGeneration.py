@@ -32,8 +32,14 @@ from llama_index.core.node_parser import SentenceSplitter
 #     from Azure_Authentication.login_to_azure_cognitive_services import select_credential
 from Azure_Authentication.login_to_azure_cognitive_services import select_credential
 
-print("Loading environment variables from .env file")
+# Load environment variables from .env file
 load_dotenv()
+
+# Choose the OpenAI Chat and Embedding model you want to use.
+# The model name selected here most match a deployment name from your OpenAI subscription.
+# The deployment needs to be available in the region set by os.environ["AZURE_OPENAI_REGIONAL_ENDPOINT"]
+LLM_DEPLOYMENT_NAME = "gpt-35-turbo-1106"
+EMBEDDING_DEPLOYMENT_NAME = "text-embedding-ada-002"
 
 print("Authenticate User & Login to Azure Cognitive Services")
 credential = select_credential(AZURE_WEBLOGIN='advanced', allow_unencrypted_storage=True, credential_path="azure_credential.json")
@@ -69,8 +75,8 @@ print(os.listdir(tmp_dir_name))
 # Use AzureOpenAI Embeddings with llama.index
 embed_model = AzureOpenAIEmbedding(
     model="text-embedding-ada-002",
-    deployment_name="text-embedding-ada-002",
-    azure_endpoint=os.getenv("AZURE_OPENAI_SODA_FR_ENDPOINT"),
+    deployment_name=EMBEDDING_DEPLOYMENT_NAME,
+    azure_endpoint=os.environ["AZURE_OPENAI_REGIONAL_ENDPOINT"],
     # use_azure_ad=True, # only useful for debugging purposes?
     api_key=token_provider(),
     api_version="2023-07-01-preview"
@@ -84,8 +90,8 @@ embed_model = AzureOpenAIEmbedding(
 # )
 
 llm = AzureOpenAI(
-    engine="gpt-35-turbo-1106", model="gpt-35-turbo-16k", temperature=0.0,
-    azure_endpoint=os.getenv("AZURE_OPENAI_SODA_FR_ENDPOINT"),
+    engine=LLM_DEPLOYMENT_NAME, model="gpt-35-turbo-16k", temperature=0.0,
+    azure_endpoint=os.environ["AZURE_OPENAI_REGIONAL_ENDPOINT"],
     # use_azure_ad=True, # only useful for debugging purposes?
     api_key=token_provider(),
     # azure_ad_token_provider=token_provider,
@@ -98,7 +104,7 @@ Settings.llm = llm
 Settings.embed_model = embed_model
 
 # add logging
-logging.basicConfig(stream=sys.stdout, level=logging.INFO) # logging.DEBUG for more verbose output
+logging.basicConfig(stream=sys.stdout, level=logging.INFO)  # logging.DEBUG for more verbose output
 logging.getLogger().addHandler(logging.StreamHandler(stream=sys.stdout))
 
 ######################################################
