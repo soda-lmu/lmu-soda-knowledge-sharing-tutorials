@@ -13,15 +13,15 @@ import os.path
 #     #     (see https://learn.microsoft.com/en-us/azure/developer/python/sdk/authentication-local-development-dev-accounts?tabs=azure-cli%2Csign-in-azure-cli)
 #     # 3. using interactive browser authentication
 
-def select_credential(weblogin='enabled', allow_unencrypted_storage=False, credential_path=""):
+def select_credential(AZURE_WEBLOGIN='enabled', allow_unencrypted_storage=False, credential_path=""):
     # Would it make sense to TRY DefaultAzureCredential first,
     # and try InteractiveBrowserCredentialWithCognitiveServiceLogin after that?
 
-    if weblogin == 'enabled':
-        return DefaultAzureCredentialWithCognitiveServiceLogin(weblogin)
-    elif weblogin == 'disabled':
-        return DefaultAzureCredentialWithCognitiveServiceLogin(weblogin)
-    elif weblogin == 'advanced':
+    if AZURE_WEBLOGIN == 'enabled':
+        return DefaultAzureCredentialWithCognitiveServiceLogin(AZURE_WEBLOGIN)
+    elif AZURE_WEBLOGIN == 'disabled':
+        return DefaultAzureCredentialWithCognitiveServiceLogin(AZURE_WEBLOGIN)
+    elif AZURE_WEBLOGIN == 'advanced':
         return InteractiveBrowserCredentialWithCognitiveServiceLogin(allow_unencrypted_storage, credential_path)
 
 

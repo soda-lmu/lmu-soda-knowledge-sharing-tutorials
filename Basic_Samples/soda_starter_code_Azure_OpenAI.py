@@ -2,13 +2,14 @@ import os
 from dotenv import load_dotenv
 from openai import AzureOpenAI
 
-from login_to_azure_cognitive_services import select_credential
+from Azure_Authentication.login_to_azure_cognitive_services import select_credential
 
 print("Loading environment variables from .env file")
 load_dotenv()
 
 print("Authenticate User & Login to Azure Cognitive Services")
-credential = select_credential(weblogin='enabled', allow_unencrypted_storage=True, credential_path="azure_credential.json")
+# ToDO variable validation & use .envs 
+credential = select_credential(AZURE_WEBLOGIN='enabled', allow_unencrypted_storage=True, credential_path="azure_credential.json")
 token_provider = credential.get_login_token_to_azure_cognitive_services()
 
 # The following would be the default way of doing things if login_to_azure_cognitive_services were not available:

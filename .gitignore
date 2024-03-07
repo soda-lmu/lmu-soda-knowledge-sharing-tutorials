@@ -2,3 +2,4 @@ Basic_Samples/.env
 azure_credential.json
 .storage/
 .tmp/
+.idea/

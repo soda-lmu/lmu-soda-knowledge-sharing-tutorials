@@ -27,13 +27,13 @@ from llama_index.llms.azure_openai import AzureOpenAI
 from llama_index.embeddings.azure_openai import AzureOpenAIEmbedding
 from llama_index.core.node_parser import SentenceSplitter
 
-from login_to_azure_cognitive_services import select_credential
+from Azure_Authentication.login_to_azure_cognitive_services import select_credential
 
 print("Loading environment variables from .env file")
 load_dotenv()
 
 print("Authenticate User & Login to Azure Cognitive Services")
-credential = select_credential(weblogin='advanced', allow_unencrypted_storage=True, credential_path="azure_credential.json")
+credential = select_credential(AZURE_WEBLOGIN='advanced', allow_unencrypted_storage=True, credential_path="azure_credential.json")
 token_provider = credential.get_login_token_to_azure_cognitive_services()
 
 #######################################################
