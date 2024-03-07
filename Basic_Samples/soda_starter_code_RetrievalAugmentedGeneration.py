@@ -42,7 +42,9 @@ LLM_DEPLOYMENT_NAME = "gpt-35-turbo-1106"
 EMBEDDING_DEPLOYMENT_NAME = "text-embedding-ada-002"
 
 print("Authenticate User & Login to Azure Cognitive Services")
-credential = select_credential(AZURE_WEBLOGIN='advanced', allow_unencrypted_storage=True, credential_path="azure_credential.json")
+# Recommendation: Configure your own authentication workflow with environment variables, see the description at
+# https://github.com/malsch/lmu-soda-utils/tree/main/Azure_Authentication
+credential = select_credential()
 token_provider = credential.get_login_token_to_azure_cognitive_services()
 
 #######################################################

@@ -13,15 +13,34 @@ import os.path
 #     #     (see https://learn.microsoft.com/en-us/azure/developer/python/sdk/authentication-local-development-dev-accounts?tabs=azure-cli%2Csign-in-azure-cli)
 #     # 3. using interactive browser authentication
 
-def select_credential(AZURE_WEBLOGIN='enabled', allow_unencrypted_storage=False, credential_path=""):
+
+def select_credential(weblogin: str | None = None,
+                      allow_unencrypted_storage: bool | None = None,
+                      credential_path: str | None = None):
+    # ToDO variable validation & docstring
     # Would it make sense to TRY DefaultAzureCredential first,
     # and try InteractiveBrowserCredentialWithCognitiveServiceLogin after that?
 
-    if AZURE_WEBLOGIN == 'enabled':
-        return DefaultAzureCredentialWithCognitiveServiceLogin(AZURE_WEBLOGIN)
-    elif AZURE_WEBLOGIN == 'disabled':
-        return DefaultAzureCredentialWithCognitiveServiceLogin(AZURE_WEBLOGIN)
-    elif AZURE_WEBLOGIN == 'advanced':
+    if weblogin is None:
+        weblogin = os.environ.get("AZURE_SODA_WEBLOGIN")
+    if weblogin is None:
+        weblogin = "enabled"
+
+    if allow_unencrypted_storage is None:
+        allow_unencrypted_storage = os.environ.get("AZURE_SODA_ALLOW_UNENCRYPTED_STORAGE")
+    if allow_unencrypted_storage is None:
+        allow_unencrypted_storage = False
+
+    if credential_path is None:
+        credential_path = os.environ.get("AZURE_SODA_CREDENTIAL_PATH")
+    if credential_path is None:
+        credential_path = ""
+
+    if weblogin == 'enabled':
+        return DefaultAzureCredentialWithCognitiveServiceLogin(weblogin)
+    elif weblogin == 'disabled':
+        return DefaultAzureCredentialWithCognitiveServiceLogin(weblogin)
+    elif weblogin == 'advanced':
         return InteractiveBrowserCredentialWithCognitiveServiceLogin(allow_unencrypted_storage, credential_path)
 
 

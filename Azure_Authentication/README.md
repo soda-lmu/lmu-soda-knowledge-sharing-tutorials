@@ -11,7 +11,7 @@ This will throw an error if Two-factor authentication (2FA) is active for your A
 
 ```
 ## Configure Azure login with username and password
-AZURE_CLIENT_ID=<application_client_id> 	    # Ask your adminstrator for the ID of a Microsoft Entra application
+AZURE_CLIENT_ID=<application_client_id> 	    # Ask your adminstrator for the ID of the Microsoft Entra application
 AZURE_USERNAME=<your_azure_username>        
 AZURE_PASSWORD=<your_azure_password>
 ```
@@ -24,7 +24,7 @@ authentication (2FA) is active. However, this can be very bothersome if log-in i
 You can disable interactive browser login with:
 
 ```
-AZURE_WEBLOGIN=disabled
+AZURE_SODA_WEBLOGIN=disabled
 ```
 
 #### Login with Azure developer tools (Azure CLI, Azure PowerShell, or Azure Developer CLI)
@@ -57,8 +57,9 @@ You need to convince your Azure administrator to share the `AZURE_CLIENT_SECRET`
 
 ```
 # Configure service principal with secret
+# This does not require user credentials!!
 AZURE_TENANT_ID=<tenant_id>                 # Ask your adminstrator for the ID of the application's Microsoft Entra tenant
-AZURE_CLIENT_ID=<application_client_id>     # Ask your adminstrator for the ID of a Microsoft Entra application
+AZURE_CLIENT_ID=<application_client_id>     # Ask your adminstrator for the ID of the Microsoft Entra application
 AZURE_CLIENT_SECRET=<client_secret>         # Ask your adminstrator for one of the application's client secrets
 ```
 

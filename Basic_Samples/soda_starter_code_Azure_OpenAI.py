@@ -16,8 +16,9 @@ load_dotenv()
 DEPLOYMENT_NAME = "gpt-35-turbo-1106"
 
 print("Authenticate User & Login to Azure Cognitive Services")
-# ToDO variable validation & use .envs 
-credential = select_credential(AZURE_WEBLOGIN='enabled', allow_unencrypted_storage=True, credential_path="azure_credential.json")
+# Recommendation: Configure your own authentication workflow with environment variables, see the description at
+# https://github.com/malsch/lmu-soda-utils/tree/main/Azure_Authentication
+credential = select_credential()
 token_provider = credential.get_login_token_to_azure_cognitive_services()
 
 # The following would be the default way to authenticate if login_to_azure_cognitive_services were not available:
