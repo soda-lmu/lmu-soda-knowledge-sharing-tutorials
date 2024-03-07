@@ -20,7 +20,7 @@ print("Authenticate User & Login to Azure Cognitive Services")
 credential = select_credential(AZURE_WEBLOGIN='enabled', allow_unencrypted_storage=True, credential_path="azure_credential.json")
 token_provider = credential.get_login_token_to_azure_cognitive_services()
 
-# The following would be the default way of doing things if login_to_azure_cognitive_services were not available:
+# The following would be the default way to authenticate if login_to_azure_cognitive_services were not available:
 # import azure.identity
 # credential = azure.identity.DefaultAzureCredential(exclude_interactive_browser_credential=False)
 # token_provider = azure.identity.get_bearer_token_provider(credential, "https://cognitiveservices.azure.com/.default")

@@ -2,16 +2,18 @@
 
 ### Configurate your log-in method
 
-We illustrate the most common authentication methods here. You can configure any one of the following via your `.env`-file
+We illustrate the most common authentication workflows here. By adding one of the following code snippets to 
+your `.env`-file, you can implement the authentication workflow that works best for you.
 
 #### Login with username and password
 
 This will throw an error if Two-factor authentication (2FA) is active for your Azure account.
 
 ```
-AZURE_CLIENT_ID 	ID of a Microsoft Entra application
-AZURE_USERNAME 	a username (usually an email address)
-AZURE_PASSWORD 	that user's password
+## Configure Azure login with username and password
+AZURE_CLIENT_ID=<application_client_id> 	    # Ask your adminstrator for the ID of a Microsoft Entra application
+AZURE_USERNAME=<your_azure_username>        
+AZURE_PASSWORD=<your_azure_password>
 ```
 
 #### Interactive login with the browser
@@ -41,6 +43,7 @@ The system will detect automatically that you have signed in. There is no need t
 You log-in via your browser. In this customized method your login token is handled in a different way.
 This can hopefully reduce the number of log-ins needed. This implementation is highly experimental and not well tested.
 
+ToDo
 ```
 AZURE_WEBLOGIN=advanced
 allow_unencrypted_storage
@@ -53,9 +56,10 @@ To be used only in exceptional use cases if everything else fails.
 You need to convince your Azure administrator to share the `AZURE_CLIENT_SECRET` with you.
 
 ```
-AZURE_CLIENT_ID 	ID of a Microsoft Entra application
-AZURE_TENANT_ID 	ID of the application's Microsoft Entra tenant
-AZURE_CLIENT_SECRET 	one of the application's client secrets
+# Configure service principal with secret
+AZURE_TENANT_ID=<tenant_id>                 # Ask your adminstrator for the ID of the application's Microsoft Entra tenant
+AZURE_CLIENT_ID=<application_client_id>     # Ask your adminstrator for the ID of a Microsoft Entra application
+AZURE_CLIENT_SECRET=<client_secret>         # Ask your adminstrator for one of the application's client secrets
 ```
 
 ### See also
