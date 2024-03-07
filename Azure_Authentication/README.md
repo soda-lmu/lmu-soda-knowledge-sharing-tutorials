@@ -19,7 +19,7 @@ AZURE_PASSWORD 	that user's password
 This is the default. A browser window will open for you to log-in to Azure. This even works if Two-factor 
 authentication (2FA) is active. However, this can be very bothersome if log-in is required too often.
 
-You can disable interactive browser login with
+You can disable interactive browser login with:
 
 ```
 AZURE_WEBLOGIN=disabled
