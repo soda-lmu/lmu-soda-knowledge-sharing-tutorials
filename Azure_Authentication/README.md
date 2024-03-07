@@ -65,4 +65,4 @@ AZURE_CLIENT_SECRET=<client_secret>         # Ask your adminstrator for one of t
 
 ### See also
 
-These procedures make heavy use of the `azure.identity`-package. Go to Azure's [authorization documentation](https://learn.microsoft.com/en-us/azure/developer/python/sdk/authentication-overview) for additional details. 
+These procedures make heavy use of the `azure.identity`-package. Go to Azure's [authorization documentation](https://learn.microsoft.com/en-us/azure/developer/python/sdk/authentication-overview) and its [GitHub page](https://github.com/Azure/azure-sdk-for-python/tree/main/sdk/identity/azure-identity) for additional details. 
