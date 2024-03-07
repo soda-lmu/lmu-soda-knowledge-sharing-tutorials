@@ -27,6 +27,9 @@ from llama_index.llms.azure_openai import AzureOpenAI
 from llama_index.embeddings.azure_openai import AzureOpenAIEmbedding
 from llama_index.core.node_parser import SentenceSplitter
 
+# import httpimport
+# with httpimport.github_repo('malsch', 'lmu-soda-utils', ref='main'):
+#     from Azure_Authentication.login_to_azure_cognitive_services import select_credential
 from Azure_Authentication.login_to_azure_cognitive_services import select_credential
 
 print("Loading environment variables from .env file")

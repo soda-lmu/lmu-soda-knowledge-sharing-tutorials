@@ -1,7 +1,6 @@
 # LMU SODA Utilities
 
-TODO: Implement https://pypi.org/project/httpimport/
-TODO: Document login-workflows
+TODO: Document login-workflows better
 
 This repository is intended to share (Python/R) code with colleagues at the [LMU SODA chair](https://www.stat.lmu.de/soda/en/).
 
