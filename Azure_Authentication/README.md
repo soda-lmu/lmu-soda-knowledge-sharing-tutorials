@@ -45,7 +45,9 @@ token=credential.get_token("https://cognitiveservices.azure.com/.default")
 ```
 
 If you do this, you don't need to import the function `select_credential()` or anything else 
-from `Azure_Authentication.customized_azure_login`. `azure.identity.DefaultAzureCredential()` 
+from `Azure_Authentication.customized_azure_login`.
+
+`azure.identity.DefaultAzureCredential()` 
 will try a chain of authentication methods, including:
 1. using environment variables (`ClientSecretCredential()` or `UsernamePasswordCredential()`),
 2. using the identity currently logged in with `Azure CLI`/`Azure PowerShell`/`Azure Developer CLI`
