@@ -8,15 +8,15 @@ We provide two minimal code examples in this directory. They can be used to get 
 - Appropriate environment variables have been set. Our recommendation: Use an `.env` files to do this (if your are not
 `.env `files, see the very brief intro below).
 
-We recommend that you start by running the very basic introduction [Chat Completions with Azure OpenAI](https://github.com/malsch/lmu-soda-utils/blob/main/Basic_Samples/soda_starter_code_Azure_OpenAI.py).
+We recommend that you start by running the very basic introduction [1. Chat Completions with Azure OpenAI](soda_starter_code_Azure_OpenAI.py).
 It shows how you can log in and use the GPT-3.5-ChatBot via Azure.
 
 The second example (optional) demonstrates common workflows when using Retrieval Augmented Generation.
 
-|    | Sample                                               | Language | Main Package         | References                                                                                                                                                                                   | 
-|----|------------------------------------------------------|----------|----------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 1. | Chat Completions with Azure OpenAI                   | Python   | `import openai`      | [Developer Quickstart by OpenAI](https://platform.openai.com/docs/quickstart?context=python), <br/>[Azure OpenAI documentation](https://learn.microsoft.com/en-us/azure/ai-services/openai/) |
-| 2. | Retrieval Augmented Generation (RAG) with LlamaIndex | Python   | `llama-index` bundle | [LlamaIndex Documentation](https://docs.llamaindex.ai/en/stable/getting_started/installation.html), <br/>[LlamaIndex on GitHub](https://github.com/run-llama/llama_index)                    |
+|    | Sample                                                                                                    | Language | Main Package         | References                                                                                                                                                                                   | 
+|----|-----------------------------------------------------------------------------------------------------------|----------|----------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1. | [Chat Completions with Azure OpenAI](soda_starter_code_Azure_OpenAI.py)                                   | Python   | `import openai`      | [Developer Quickstart by OpenAI](https://platform.openai.com/docs/quickstart?context=python), <br/>[Azure OpenAI documentation](https://learn.microsoft.com/en-us/azure/ai-services/openai/) |
+| 2. | [Retrieval Augmented Generation (RAG) with LlamaIndex](soda_starter_code_RetrievalAugmentedGeneration.py) | Python   | `llama-index` bundle | [LlamaIndex Documentation](https://docs.llamaindex.ai/en/stable/getting_started/installation.html), <br/>[LlamaIndex on GitHub](https://github.com/run-llama/llama_index)                    |
 
 ### About personalized login to Azure OpenAI
 
