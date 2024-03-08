@@ -5,8 +5,8 @@ We provide two minimal code examples in this directory. They can be used to get 
 **Prerequisites**:
 
 - Access to use Azure OpenAI Service was granted by your administrator
-- Appropriate environment variables have been set. Our recommendation: Use an `.env` files to do this (if your are not
-`.env `files, see the very brief intro below).
+- Appropriate environment variables have been set. Our recommendation: Use an `.env` files to do this (if you haven't 
+heard about `.env ` files yet, see the very brief intro below).
 
 We recommend that you start by running the very basic introduction [1. Chat Completions with Azure OpenAI](soda_starter_code_Azure_OpenAI.py).
 It shows how you can log in and use the GPT-3.5-ChatBot via Azure.
@@ -39,9 +39,10 @@ credential = azure.identity.DefaultAzureCredential(exclude_interactive_browser_c
 token_provider = azure.identity.get_bearer_token_provider(credential, "https://cognitiveservices.azure.com/.default")
 ```
 
-If you do this, you don't need to import anything from `Azure_Authentication.login_to_azure_cognitive_services`.
+If you do this, you don't need to import the function `select_credential()` or anything else 
+from `Azure_Authentication.login_to_azure_cognitive_services`.
 Though, authentication workflows that use environment variables starting with `AZURE_SODA_...` won't work
-any longer for people using your code.
+any longer for colleagues using your code.
 
 
 ## A very brief introduction to `.env` files
