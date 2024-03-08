@@ -2,10 +2,9 @@ import os
 from dotenv import load_dotenv
 from openai import AzureOpenAI
 
-# import httpimport
-# with httpimport.github_repo('malsch', 'lmu-soda-utils', ref='main'):
-#     from Azure_Authentication.login_to_azure_cognitive_services import select_credential
-from Azure_Authentication.login_to_azure_cognitive_services import select_credential
+import httpimport
+with httpimport.github_repo('malsch', 'lmu-soda-utils', ref='main'):
+    from Azure_Authentication.login_to_azure_cognitive_services import select_credential
 
 # Loading environment variables from .env file
 load_dotenv()
@@ -21,29 +20,24 @@ print("Authenticate User & Login to Azure Cognitive Services")
 credential = select_credential()
 token_provider = credential.get_login_token_to_azure_cognitive_services()
 
-# The following would be the default way to authenticate if login_to_azure_cognitive_services were not available:
-# import azure.identity
-# credential = azure.identity.DefaultAzureCredential(exclude_interactive_browser_credential=False)
-# token_provider = azure.identity.get_bearer_token_provider(credential, "https://cognitiveservices.azure.com/.default")
-
 print("Instantiate Azure OpenAI Client")
 # %% Authentication works in various ways:
-# For the api_key argument we can either pass an API_KEY or the token_provider() we just created.
-# We can even authenticate in three equivalent ways:
+# We can authenticate in three equivalent ways:
 # - pass 'token_provider()' as an argument to 'api_key'
 # - pass 'token_provider()' as an argument to 'azure_ad_token'
-# - pass 'token_provider' as an argument to 'azure_ad_token_provider'
+# - pass 'token_provider' as an argument to 'azure_ad_token_provider'. Note that '()' is missing here.
+# For the api_key argument we can either pass an API_KEY or the token_provider() we just created.
 client = AzureOpenAI(
     azure_endpoint=os.environ["AZURE_OPENAI_REGIONAL_ENDPOINT"],
-    api_key=token_provider(),  # alternative: insert os.environ["AZURE_OPENAI_SODA_FR_KEY"],
-    # azure_ad_token=token_provider(),  # same outcome
-    # azure_ad_token_provider=token_provider, # same outcome again
+    api_key=token_provider(),  # alternative: insert os.getenv("AZURE_OPENAI_API_KEY")
+    # azure_ad_token=token_provider(),          # same outcome
+    # azure_ad_token_provider=token_provider,   # same outcome again
     api_version="2023-12-01-preview",
 )
 
-print("A simple call to the OpenAI API")
+print("Call to the Azure OpenAI Chat Completions API")
 response = client.chat.completions.create(
-    model=DEPLOYMENT_NAME,  # model = "deployment_name"
+    model=DEPLOYMENT_NAME,
     messages=[
         {"role": "system", "content": "You are a helpful assistant."},
         {"role": "user", "content": "Does Azure OpenAI support customer managed keys?"},

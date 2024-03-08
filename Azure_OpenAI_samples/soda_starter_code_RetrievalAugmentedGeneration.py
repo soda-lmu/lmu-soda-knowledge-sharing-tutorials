@@ -96,8 +96,8 @@ llm = AzureOpenAI(
     azure_endpoint=os.environ["AZURE_OPENAI_REGIONAL_ENDPOINT"],
     # use_azure_ad=True, # only useful for debugging purposes?
     api_key=token_provider(),
-    # azure_ad_token_provider=token_provider,
     # azure_ad_token=token_provider(),
+    # azure_ad_token_provider=token_provider,
     api_version="2023-07-01-preview"
 )
 
@@ -119,7 +119,7 @@ logging.getLogger().addHandler(logging.StreamHandler(stream=sys.stdout))
 
 # By default, the index is stored in memory as a series of vector embeddings.
 # You can save time (and requests to OpenAI) by saving the embeddings to disk.
-# Only if the embedding index does not exist yet, we will need to create it.
+# Only if the embedding index in PERSIST_DIR does not exist yet, we will need to create it.
 
 # check if storage already exists
 PERSIST_DIR = "./storage"
