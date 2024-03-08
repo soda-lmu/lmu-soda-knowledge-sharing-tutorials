@@ -29,7 +29,7 @@ token_provider = credential.get_login_token_to_azure_cognitive_services()
 
 You probably needed to log in via your Web browser to run this code. We recommend that you configure your own 
 authentication workflow with environment variables, as 
-described at https://github.com/malsch/lmu-soda-utils/tree/main/Azure_Authentication.
+described at [Authentication Workflow Setup](../Azure_Authentication/AuthenticationWorkflowSetup.md).
 
 If you prefer, you can replace the two lines of code from above with the following:
 

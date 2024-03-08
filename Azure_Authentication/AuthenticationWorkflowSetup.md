@@ -1,11 +1,11 @@
 # Azure Authentication for SODA
 
-### Configurate your log-in method
+## Configure your preferred log-in method
 
 We illustrate the most common authentication workflows here. By adding one of the following code snippets to 
 your `.env`-file, you can implement the authentication workflow that works best for you.
 
-#### Login with username and password _(recommended)_
+### Login with username and password _(recommended)_
 
 Log in with your username and password.
 
@@ -18,7 +18,7 @@ AZURE_USERNAME=<your_azure_username>
 AZURE_PASSWORD=<your_azure_password>
 ```
 
-#### Interactive login with the browser _(recommended)_
+### Interactive login with the browser _(recommended)_
 
 Log in interactively via your Web browser.
 
@@ -31,7 +31,7 @@ You can disable interactive browser login with:
 AZURE_SODA_WEBLOGIN=disabled
 ```
 
-#### Customized interactive login with the browser
+### Customized interactive login with the browser
 
 Again, you log in via your browser. In this customized version your login authentication token is handled 
 in a different way. The [azure-identity documentation on token caching](https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/identity/azure-identity/TOKEN_CACHING.md)
@@ -52,7 +52,7 @@ AZURE_SODA_ALLOW_UNENCRYPTED_STORAGE=False
 
 ```
 
-#### Login with Azure developer tools (Azure CLI, Azure PowerShell, or Azure Developer CLI)
+### Login with Azure developer tools (Azure CLI, Azure PowerShell, or Azure Developer CLI)
 
 Install either Azure CLI or Azure PowerShell or Azure Developer CLI. 
 You can sign in to Azure from the command line using one of the following commands:
@@ -63,7 +63,7 @@ You can sign in to Azure from the command line using one of the following comman
 
 The system will detect automatically that you have signed in. There is no need to add anything to your `.env`-file.
 
-#### Service principal with secret
+### Service principal with secret
 
 To be used only in exceptional use cases if everything else fails. 
 You need to convince your Azure administrator to share the `AZURE_CLIENT_SECRET` with you.
@@ -76,7 +76,7 @@ AZURE_CLIENT_ID=<application_client_id>     # Ask your adminstrator for the ID o
 AZURE_CLIENT_SECRET=<client_secret>         # Ask your adminstrator for one of the application's client secrets
 ```
 
-### See also
+## See also
 
 These procedures make heavy use of the `azure.identity`-package. Go to Azure's [authorization documentation](https://learn.microsoft.com/en-us/azure/developer/python/sdk/authentication-overview) 
 and its [GitHub page](https://github.com/Azure/azure-sdk-for-python/tree/main/sdk/identity/azure-identity) for 
