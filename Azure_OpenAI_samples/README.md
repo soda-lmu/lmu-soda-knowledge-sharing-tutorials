@@ -20,7 +20,7 @@ The second example (optional) demonstrates common workflows when using Retrieval
 
 ### About personalized login to Azure OpenAI
 
-Both examples authorize users with two lines of code:
+Both examples authorize users with two lines of code (for an alternative, see [this file](../Azure_Authentication/):
 
 ```
 credential = select_credential()
@@ -30,20 +30,6 @@ token_provider = credential.get_login_token_to_azure_cognitive_services()
 You probably needed to log in via your Web browser to run this code. We recommend that you configure your own 
 authentication workflow with environment variables, as 
 described at [Authentication Workflow Setup](../Azure_Authentication/AuthenticationWorkflowSetup.md).
-
-If you prefer, you can replace the two lines of code from above with the following:
-
-```
-import azure.identity
-credential = azure.identity.DefaultAzureCredential(exclude_interactive_browser_credential=False)
-token_provider = azure.identity.get_bearer_token_provider(credential, "https://cognitiveservices.azure.com/.default")
-```
-
-If you do this, you don't need to import the function `select_credential()` or anything else 
-from `Azure_Authentication.login_to_azure_cognitive_services`.
-Though, authentication workflows that use environment variables starting with `AZURE_SODA_...` won't work
-any longer for colleagues using your code.
-
 
 ## A very brief introduction to `.env` files
 

@@ -4,7 +4,7 @@ from openai import AzureOpenAI
 
 import httpimport
 with httpimport.github_repo('malsch', 'lmu-soda-utils', ref='main'):
-    from Azure_Authentication.login_to_azure_cognitive_services import select_credential
+    from Azure_Authentication.customized_azure_login import select_credential
 
 # Loading environment variables from .env file
 load_dotenv()

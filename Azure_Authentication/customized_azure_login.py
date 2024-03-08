@@ -3,28 +3,6 @@ import json
 import os.path
 from typing import Callable
 
-# %% The simplest way to use azure.identity:
-# credential = azure.identity.DefaultAzureCredential(logging_enable=False, exclude_interactive_browser_credential=False)
-# token=credential.get_token("https://cognitiveservices.azure.com/.default")
-#
-# This will try a chain of authentication methods, including:
-# 1. using environment variables (ClientSecretCredential () or UsernamePasswordCredential()),
-# 2. using the identity currently logged in to the Azure CLI/Azure PowerShell/Azure Developer CLI
-# 3. using interactive browser authentication InteractiveBrowserCredential()
-#
-# The classes and functions implemented in this file still use the same functionality from `azure.identity`. Then,
-# why do we need this file?
-#
-# This file
-# - simplifies authentication with Microsoft Entra ID for Azure Cognitive Services for Python beginners.
-#   It uses shorter and more expressive function and parameter names, so that using this process becomes a nuisance.
-# - is completely configurable with environment variables. This means different people (beginners!) who
-#   want/need to set different environment variables can still execute identical code in their respective environments.
-# - implements InteractiveBrowserCredential() with **persistent Token caching on disk**
-#   (see https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/identity/azure-identity/TOKEN_CACHING.md) as
-#   an additional alternative that seems to be impossible when using DefaultAzureCredential()
-
-
 class DefaultAzureCredentialWithCognitiveServiceLogin(azure.identity.DefaultAzureCredential):
 
     def __init__(self, weblogin):
