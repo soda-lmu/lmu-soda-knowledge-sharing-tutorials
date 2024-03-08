@@ -5,7 +5,9 @@
 We illustrate the most common authentication workflows here. By adding one of the following code snippets to 
 your `.env`-file, you can implement the authentication workflow that works best for you.
 
-#### Login with username and password
+#### Login with username and password _(recommended)_
+
+Log in with your username and password.
 
 This will throw an error if Two-factor authentication (2FA) is active for your Azure account.
 
@@ -16,7 +18,9 @@ AZURE_USERNAME=<your_azure_username>
 AZURE_PASSWORD=<your_azure_password>
 ```
 
-#### Interactive login with the browser
+#### Interactive login with the browser _(recommended)_
+
+Log in interactively via your Web browser.
 
 This is the default. A browser window will open for you to log in to Azure. This even works if Two-factor 
 authentication (2FA) is active. However, this can be very bothersome if log-in is required too often.
@@ -42,7 +46,7 @@ AZURE_SODA_WEBLOGIN=advanced
 AZURE_SODA_CREDENTIAL_PATH=path_to_file/azure_credential.json
 
 # You can set AZURE_SODA_ALLOW_UNENCRYPTED_STORAGE=True if your system does not support token encryption. 
-# Be aware of the risk: Without encryption anyone with access to your system can access sensitive information
+# Be aware of the risk: Without encryption anyone, who has access to your system, can access sensitive information
 # and log in to Azure using your identity.
 AZURE_SODA_ALLOW_UNENCRYPTED_STORAGE=False 
 
