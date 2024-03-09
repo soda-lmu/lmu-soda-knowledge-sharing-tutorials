@@ -12,3 +12,5 @@ azure_credential.json
 
 # Distribution / packaging
 azure_authentication/dist/
+*.egg-info/
+*.egg
