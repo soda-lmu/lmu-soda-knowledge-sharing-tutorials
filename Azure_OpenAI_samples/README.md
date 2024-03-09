@@ -21,7 +21,7 @@ The second example (optional) demonstrates common workflows when using Retrieval
 ### About personalized login to Azure OpenAI
 
 Both examples authorize users with two lines of code (for an alternative, 
-see [this file](../azure_authentication/README.md):
+see [this file](../azure_authentication/README.md)):
 
 ```
 credential = select_credential()
