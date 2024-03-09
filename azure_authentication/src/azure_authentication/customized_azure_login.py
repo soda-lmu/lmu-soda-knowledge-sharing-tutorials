@@ -1,7 +1,9 @@
-import azure.identity
 import json
 import os.path
 from typing import Callable
+
+import azure.identity
+
 
 class DefaultAzureCredentialWithCognitiveServiceLogin(azure.identity.DefaultAzureCredential):
 
@@ -77,7 +79,7 @@ class InteractiveBrowserCredentialWithCognitiveServiceLogin(azure.identity.Inter
             print("""You can persist token caching to reduce the number of logins required. 
                         See details in the documentation on GitHub.""")
 
-    def get_login_token_to_azure_cognitive_services(self)-> Callable[[], str]:
+    def get_login_token_to_azure_cognitive_services(self) -> Callable[[], str]:
         """
         Authenticate with Microsoft Entra ID against Azure Cognitive Services.
 
