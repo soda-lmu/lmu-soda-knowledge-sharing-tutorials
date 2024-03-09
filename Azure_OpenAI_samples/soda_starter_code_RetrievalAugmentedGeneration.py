@@ -8,14 +8,13 @@
 
 # %%
 
-import urllib.request
-import shutil
-
-import os.path
 import logging
+import os.path
+import shutil
 import sys
-from dotenv import load_dotenv
+import urllib.request
 
+from dotenv import load_dotenv
 from llama_index.core import (
     VectorStoreIndex,
     SimpleDirectoryReader,
@@ -27,12 +26,16 @@ from llama_index.llms.azure_openai import AzureOpenAI
 from llama_index.embeddings.azure_openai import AzureOpenAIEmbedding
 from llama_index.core.node_parser import SentenceSplitter
 
-# import httpimport
-# with httpimport.github_repo('malsch', 'lmu-soda-utils', ref='main'):
-#     from azure_authentication.login_to_azure_cognitive_services import select_credential
-from azure_authentication.src.azure_authentication.customized_azure_login import select_credential
+# Option 1: Use httpimport to load 'azure_authentication' package remotely from GitHub without installing it
+import httpimport
+with httpimport.github_repo('malsch', 'lmu-soda-utils', ref='main'):
+    from azure_authentication.customized_azure_login import select_credential
 
-# Load environment variables from .env file
+# or install 'azure_authentication' via the pip command, import it afterward:
+# pip install "azure_authentication@git+https://github.com/malsch/lmu-soda-utils.git/#subdirectory=azure_authentication"
+# from azure_authentication.customized_azure_login import select_credential
+
+# Option 2: Load environment variables from .env file
 load_dotenv()
 
 # Choose the OpenAI Chat and Embedding model you want to use.

@@ -1,10 +1,16 @@
 import os
+
 from dotenv import load_dotenv
 from openai import AzureOpenAI
 
+# Option 1: Use httpimport to load 'azure_authentication' package remotely from GitHub without installing it
 import httpimport
-with httpimport.github_repo('malsch', 'lmu-soda-utils', ref='main'):
-    from azure_authentication.src.azure_authentication.customized_azure_login import select_credential
+with httpimport.github_repo(username='malsch', repo='lmu-soda-utils', ref='main'):
+    from azure_authentication.customized_azure_login import select_credential
+
+# Option 2: Install 'azure_authentication' via the pip command, import it afterward:
+# pip install "azure_authentication@git+https://github.com/malsch/lmu-soda-utils.git/#subdirectory=azure_authentication"
+# from azure_authentication.customized_azure_login import select_credential
 
 # Loading environment variables from .env file
 load_dotenv()
