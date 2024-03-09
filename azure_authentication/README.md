@@ -22,8 +22,8 @@ are two examples where your app needs to log in.
 
 The `azure_authentication` package supports the login process. Different users 
 automatically take different routes to log in, depending on the environment variables they have set. We want to make it 
-for every user as simple as possible to log in. Users can set their environment variables as described in 
-[AuthenticationWorkflowSetup.md](AuthenticationWorkflowSetup.md).
+for every user as simple as possible to log in. Users can set their environment variables as described in the
+[Authentication Workflow Setup](AuthenticationWorkflowSetup.md).
 
 The following code snippet shows (all) the functionality that this package currently provides.
 
@@ -37,7 +37,10 @@ token_provider = credential.get_login_token_to_azure_cognitive_services()
 1. `select_credential()` selects the appropriate Credential class (inherited from `azure-identity`) to authenticate 
 with Microsoft Azure Entra ID. It is best to be controlled by the user with environment variables.
 2. `get_login_token_to_azure_cognitive_services()` returns a user's personal access token. It can
-be used later access Azure Cognitive Services (e.g. Azure OpenAI).
+be used later to access Azure Cognitive Services (e.g. Azure OpenAI).
+
+Environment variables should control what exactly happens when the function `select_credential()` is called.
+Environment variables that are specific to this package start with `AZURE_SODA_...`, see the [Authentication Workflow Setup](AuthenticationWorkflowSetup.md)
 
 # Alternatives
 
@@ -82,11 +85,9 @@ The added value compared to just using `azure.identity.DefaultAzureCredential()`
 with **persistent token caching on disk** (see [here](https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/identity/azure-identity/TOKEN_CACHING.md)) 
 if a user sets the environment variable `AZURE_SODA_WEBLOGIN=advanced`. 
 
-This, and any future customizations, hopefully make the login process less burdensome. Two developers can use the same
-code, even if at one machine `azure.identity.DefaultAzureCredential()` is called and at a different machine 
+This, and any future customizations, hopefully make the login process less burdensome. Two developers can use exactly
+the same code, even if on one machine `azure.identity.DefaultAzureCredential()` is called and at a different machine 
 `azure.identity.InteractiveBrowserCredential()`.
-
-All customizations are controlled through environment variables that start with `AZURE_SODA_...`.
 
 2. Moreover, the first code chunk above is shorter than alternative ones based on 
 `import azure.identity`. Parameters have default values that are more appropriate in an educational context.
