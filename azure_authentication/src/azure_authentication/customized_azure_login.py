@@ -1,3 +1,19 @@
+"""Simplify authentication with Microsoft Entra ID (Azure).
+
+Developers use their environment variables to determine the log-in workflow they want to use.
+
+Once they have a credential, they get a bearer token for Azure Cognitive Services.
+
+Typical usage example:
+
+    import httpimport
+    with httpimport.github_repo(username='malsch', repo='lmu-soda-utils', ref='main'):
+        from azure_authentication.customized_azure_login import select_credential
+
+    credential = select_credential()
+    token_provider = credential.get_login_token_to_azure_cognitive_services()
+"""
+
 import json
 import os.path
 from typing import Callable
@@ -37,7 +53,7 @@ class DefaultAzureCredentialWithCognitiveServiceLogin(azure.identity.DefaultAzur
 class InteractiveBrowserCredentialWithCognitiveServiceLogin(azure.identity.InteractiveBrowserCredential):
     """Opens a browser to interactively authenticate users.
 
-    We want to enable token caching with interactive login, see the documentation at
+    We enable persistent token caching with interactive login, see the documentation at
     https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/identity/azure-identity/TOKEN_CACHING.md
     This is not possible with the class DefaultAzureCredentialWithCognitiveServiceLogin"""
 
