@@ -1,0 +1,26 @@
+# authorative guide for writing pyproject.toml files is available at
+# https://packaging.python.org/en/latest/guides/writing-pyproject-toml/
+
+[build-system]
+requires = ["setuptools >= 61.0.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"] # optional, ["."] by default
+
+[project]
+name = "azure_authentication"
+version = "0.0.1"
+description = "Customized authentification to Microsoft Azure (A wrapper around the azure-identity package)"
+authors = [
+  { name="Malte Schierholz" }
+]
+readme = "README.md"
+dependencies = [
+  "azure-identity"
+]
+
+[project.urls]
+Homepage = "https://github.com/malsch/lmu-soda-utils/tree/main/azure_authentication"
+
+

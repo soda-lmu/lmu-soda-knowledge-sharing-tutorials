@@ -1,5 +1,14 @@
 Azure_OpenAI_samples/.env
+
+# azure_authentification
 azure_credential.json
+
+# soda_starter_code_RetrievalAugmentedGeneration.py
 .storage/
 .tmp/
+
+# PyCharm
 .idea/
+
+# Distribution / packaging
+azure_authentication/dist/

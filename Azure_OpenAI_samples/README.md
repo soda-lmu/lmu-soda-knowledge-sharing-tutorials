@@ -20,7 +20,7 @@ The second example (optional) demonstrates common workflows when using Retrieval
 
 ### About personalized login to Azure OpenAI
 
-Both examples authorize users with two lines of code (for an alternative, see [this file](../Azure_Authentication/):
+Both examples authorize users with two lines of code (for an alternative, see [this file](../azure_authentication/):
 
 ```
 credential = select_credential()
@@ -29,7 +29,7 @@ token_provider = credential.get_login_token_to_azure_cognitive_services()
 
 You probably needed to log in via your Web browser to run this code. We recommend that you configure your own 
 authentication workflow with environment variables, as 
-described at [Authentication Workflow Setup](../Azure_Authentication/AuthenticationWorkflowSetup.md).
+described at [Authentication Workflow Setup](../azure_authentication/AuthenticationWorkflowSetup.md).
 
 ## A very brief introduction to `.env` files
 

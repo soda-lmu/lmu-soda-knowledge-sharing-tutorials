@@ -4,7 +4,7 @@ from openai import AzureOpenAI
 
 import httpimport
 with httpimport.github_repo('malsch', 'lmu-soda-utils', ref='main'):
-    from Azure_Authentication.customized_azure_login import select_credential
+    from azure_authentication.src.azure_authentication.customized_azure_login import select_credential
 
 # Loading environment variables from .env file
 load_dotenv()
@@ -16,7 +16,7 @@ DEPLOYMENT_NAME = "gpt-35-turbo-1106"
 
 print("Authenticate User & Login to Azure Cognitive Services")
 # Recommendation: Configure your own authentication workflow with environment variables, see the description at
-# https://github.com/malsch/lmu-soda-utils/tree/main/Azure_Authentication/AuthenticationWorkflowSetup.md
+# https://github.com/malsch/lmu-soda-utils/tree/main/azure_authentication/AuthenticationWorkflowSetup.md
 credential = select_credential()
 token_provider = credential.get_login_token_to_azure_cognitive_services()
 

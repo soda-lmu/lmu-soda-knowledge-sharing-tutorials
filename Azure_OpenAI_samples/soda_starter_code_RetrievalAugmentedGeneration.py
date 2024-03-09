@@ -29,8 +29,8 @@ from llama_index.core.node_parser import SentenceSplitter
 
 # import httpimport
 # with httpimport.github_repo('malsch', 'lmu-soda-utils', ref='main'):
-#     from Azure_Authentication.login_to_azure_cognitive_services import select_credential
-from Azure_Authentication.customized_azure_login import select_credential
+#     from azure_authentication.login_to_azure_cognitive_services import select_credential
+from azure_authentication.src.azure_authentication.customized_azure_login import select_credential
 
 # Load environment variables from .env file
 load_dotenv()
