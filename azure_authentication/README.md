@@ -16,8 +16,8 @@ with httpimport.github_repo(username='malsch', repo='lmu-soda-utils', ref='main'
 # Usage
 
 You may need to log in to Microsoft Entra ID to use services like Azure OpenAI. The basic tutorial 
-[Chat Completions with Azure OpenAI](../Azure_OpenAI_samples/soda_starter_code_Azure_OpenAI.py) and the
-[RAG example with LlamaIndex](../Azure_OpenAI_samples/soda_starter_code_RetrievalAugmentedGeneration.py)
+[Chat Completions with Azure OpenAI](../azure-openAI-recipes/soda_starter_code_Azure_OpenAI.py) and the
+[RAG example with LlamaIndex](../azure-openAI-recipes/soda_starter_code_RetrievalAugmentedGeneration.py)
 are two examples where your app needs to log in.
 
 The `azure_authentication` package supports the login process. Different users 
