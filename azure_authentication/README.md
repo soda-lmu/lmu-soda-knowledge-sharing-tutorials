@@ -1,3 +1,11 @@
+# Installation
+
+Install the latest development version directly from GitHub.
+
+```
+pip install "azure_authentication@git+https://github.com/malsch/lmu-soda-utils.git/#subdirectory=azure_authentication"
+```
+
 # What is this?
 
 You may need to log in to Microsoft Entra ID to use services like Azure OpenAI. The basic tutorial 
