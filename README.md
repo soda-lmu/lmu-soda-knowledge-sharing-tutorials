@@ -26,7 +26,9 @@ that sits in this folder. By doing so, you will:
 
 #### More recipes
 
-- Another recipe lets you try [Retrieval Augmented Generation (RAG)](./azure-openAI-recipes/soda_starter_code_RetrievalAugmentedGeneration.py) with `llamaIndex`.
+- Another recipe lets you try 
+[Retrieval Augmented Generation (RAG)](./azure-openAI-recipes/soda_starter_code_RetrievalAugmentedGeneration.py) 
+with `llamaIndex`.
 
 #### Python packages
 
