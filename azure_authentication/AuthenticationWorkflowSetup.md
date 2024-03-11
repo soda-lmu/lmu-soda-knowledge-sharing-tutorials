@@ -18,7 +18,7 @@ AZURE_USERNAME=<your_azure_username>
 AZURE_PASSWORD=<your_azure_password>
 ```
 
-### Interactive login with the browser _(recommended)_
+### Interactive login with the browser _(default behavior, recommended)_
 
 Log in interactively via your Web browser.
 
@@ -33,10 +33,18 @@ AZURE_SODA_WEBLOGIN=disabled
 
 ### Customized interactive login with the browser
 
-Again, you log in via your browser. In this customized version your login authentication token is handled 
-in a different way. The [azure-identity documentation on token caching](https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/identity/azure-identity/TOKEN_CACHING.md)
-sounds like this can reduce the number of log-ins needed. The implementation here is highly experimental 
-and not well tested.
+Again, you log in via your browser. However, with customized interactive login your login authentication token is stored on your hard drive.
+
+Why use it?
+- Easy setup, and it even works if Two-factor authentication (2FA) is active.
+- Compared to the default behavior, you (hopefully) need to authenticate yourself less often via your Web browser.
+
+Security risks:
+- Your secret login authentication token for Azure is stored on your hard drive. It is your responsibility to make sure that nobody other than you has access to it.
+
+The implementation here is highly experimental 
+and not well tested. The [azure-identity documentation on token caching](https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/identity/azure-identity/TOKEN_CACHING.md)
+provides further information of what happens behind the scene. 
 
 ```
 ## Configure customized interactive login with the browser
