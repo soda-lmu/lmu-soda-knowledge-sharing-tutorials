@@ -38,7 +38,8 @@ client = AzureOpenAI(
     api_key=token_provider(),  # alternative: insert os.getenv("AZURE_OPENAI_API_KEY")
     # azure_ad_token=token_provider(),          # same outcome
     # azure_ad_token_provider=token_provider,   # same outcome again
-    api_version="2023-12-01-preview",
+    api_version="2023-05-15",  # or use a preview version (e.g., "2024-03-01-preview") for the latest features.
+    # api_version (How-To): https://stackoverflow.com/questions/76475419/how-can-i-select-the-proper-openai-api-version
 )
 
 print("Call to the Azure OpenAI Chat Completions API")

@@ -84,7 +84,8 @@ embed_model = AzureOpenAIEmbedding(
     azure_endpoint=os.environ["AZURE_OPENAI_REGIONAL_ENDPOINT"],
     # use_azure_ad=True, # only useful for debugging purposes?
     api_key=token_provider(),
-    api_version="2023-07-01-preview"
+    api_version="2023-05-15"  # or use a preview version (e.g., "2024-03-01-preview") for the latest features.
+    # api_version (How-To): https://stackoverflow.com/questions/76475419/how-can-i-select-the-proper-openai-api-version
 )
 # Alternative: Use HuggingFace Embeddings locally(!!) with llama.index instead of the default embedding-ada-002?
 # The following requires on my machine >1.5 GB disk space:
@@ -101,7 +102,7 @@ llm = AzureOpenAI(
     api_key=token_provider(),
     # azure_ad_token=token_provider(),
     # azure_ad_token_provider=token_provider,
-    api_version="2023-07-01-preview"
+    api_version="2023-05-15"
 )
 
 # make these models the default that will be used by llamaIndex
