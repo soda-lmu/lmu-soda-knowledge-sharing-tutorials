@@ -83,12 +83,11 @@ The added value compared to just using `azure.identity.DefaultAzureCredential()`
 1. In addition, the package supports
 `azure.identity.InteractiveBrowserCredential()` (Interactive login via the browser)
 with **persistent token caching on disk** (see [here](https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/identity/azure-identity/TOKEN_CACHING.md)) 
-if a user sets the environment variable `AZURE_SODA_WEBLOGIN=advanced`. 
-
+if a user sets the environment variable `AZURE_SODA_WEBLOGIN=advanced`. This feature can be super helpful for users who have Two-Factor authentication enabled.
 This, and any future customizations, hopefully make the login process less burdensome. Two developers can use exactly
 the same code, even if on one machine `azure.identity.DefaultAzureCredential()` is called and at a different machine 
 `azure.identity.InteractiveBrowserCredential()`.
 
-2. Moreover, the first code chunk above is shorter than alternative ones based on 
+3. Moreover, the first code chunk above is shorter than alternative ones based on 
 `import azure.identity`. Parameters have default values that are more appropriate in an educational context.
-It doesn't distract with superfluous details, which is relevant, in particular, if beginners try to use this code.
+It doesn't distract with superfluous details, which is relevant, in particular, if beginners try to use your code.
