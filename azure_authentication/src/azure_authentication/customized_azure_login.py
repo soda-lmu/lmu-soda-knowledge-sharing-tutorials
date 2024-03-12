@@ -179,8 +179,11 @@ class CredentialFactory:
                                                                          self.credential_path)
 
 
-if __name__ == "__main__":
-    # intended workflow below:
+def main():
+    """
+    This is not a useful application code, but it demonstrates the intended usage of this module.
+    """
+
     load_dotenv()
 
     # get credentials and access token based on your environment variables
@@ -188,7 +191,8 @@ if __name__ == "__main__":
     token_provider = credential.get_login_token_to_azure_cognitive_services()
 
     # custom Azure OpenAI deployment name
-    DEPLOYMENT_NAME = "gpt-35-turbo-1106"
+    # -> this function will always throw an error when this is kept.
+    DEPLOYMENT_NAME = "<your_deployment_name>"  # "gpt-35-turbo-1106"
 
     client = AzureOpenAI(
         azure_endpoint=os.environ["AZURE_OPENAI_REGIONAL_ENDPOINT"],
@@ -207,6 +211,10 @@ if __name__ == "__main__":
     )
 
     print(response.choices[0].message.content)
+
+if __name__ == "__main__":
+    main()
+
 
 
 ###########################################################################################
