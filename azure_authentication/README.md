@@ -10,7 +10,7 @@ from GitHub without installing it.
 ```
 import httpimport
 with httpimport.github_repo(username='malsch', repo='lmu-soda-utils', ref='main'):
-    from azure_authentication.customized_azure_login import select_credential
+    from azure_authentication.customized_azure_login import CredentialFactory
 ```
 
 # Usage
@@ -28,13 +28,13 @@ for every user as simple as possible to log in. Users can set their environment 
 The following code snippet shows (all) the functionality that this package currently provides.
 
 ```
-from azure_authentication.customized_azure_login import select_credential
+from azure_authentication.customized_azure_login import CredentialFactory
 
-credential = select_credential()
+credential = CredentialFactory().select_credential()
 token_provider = credential.get_login_token_to_azure_cognitive_services()
 ```
 
-1. `select_credential()` selects the appropriate Credential class (inherited from `azure-identity`) to authenticate 
+1. `CredentialFactory().select_credential()` selects the appropriate Credential class (inherited from `azure-identity`) to authenticate 
 with Microsoft Azure Entra ID. It is best to be controlled by the user with environment variables.
 2. `get_login_token_to_azure_cognitive_services()` returns a user's personal access token. It can
 be used later to access Azure Cognitive Services (e.g. Azure OpenAI).
