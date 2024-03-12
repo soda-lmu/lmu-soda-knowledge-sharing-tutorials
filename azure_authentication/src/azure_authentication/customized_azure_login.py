@@ -15,8 +15,12 @@ Typical usage example:
 """
 
 import json
+import os
 import os.path
 from typing import Callable
+
+from dotenv import load_dotenv
+from openai import AzureOpenAI
 
 import azure.identity
 
@@ -107,61 +111,102 @@ class InteractiveBrowserCredentialWithCognitiveServiceLogin(azure.identity.Inter
         return azure.identity.get_bearer_token_provider(self, "https://cognitiveservices.azure.com/.default")
 
 
-def select_credential(weblogin: str | None = None,
-                      credential_path: str | None = None,
-                      allow_unencrypted_storage: bool | None = None) \
-        -> DefaultAzureCredentialWithCognitiveServiceLogin | InteractiveBrowserCredentialWithCognitiveServiceLogin:
-    """
-    Select the appropriate Credential class (inherited from ``azure-identity``) to authenticate with Microsoft Azure
-    Entra ID. It is best to be controlled with environment variables.
+class CredentialFactory:
 
-    The default function behavior runs ``DefaultAzureCredential(exclude_interactive_browser_credential=False)``, with
-    the authentication workflow described at
-    https://github.com/Azure/azure-sdk-for-python/tree/main/sdk/identity/azure-identity#defaultazurecredential.
+    def __init__(self,
+                 weblogin: str | None = None,
+                 credential_path: str | None = None,
+                 allow_unencrypted_storage: bool | None = None):
+        """
+        Create a credential object with CredentialFactory().select_credential()
 
-    :param weblogin: Whether to try interactive browser authentication (weblogin='enabled') or not
-        (weblogin='disabled'). Experimental: If you want to set additional parameters to control the authentication
-        process, try weblogin='advanced'. Defaults to the value of the environment variable AZURE_SODA_WEBLOGIN. If not
-         specified, weblogin='enabled' will be used.
-    :param credential_path: (only used if weblogin='advanced'). Example usage: 'path_to_file/azure_credential.json'.
-        Define the path and file name where you want to store/persist your AuthenticationRecord in your local
-        system (it does not include sensitive information). This enables access across different applications or
-        process invocations. If it is not set, the access token is only available during the current process.
-        Defaults to the value of the environment variable AZURE_SODA_CREDENTIAL_PATH.
-    :param allow_unencrypted_storage: (only used if weblogin='advanced') By default, the cache is encrypted with the
-        current platform's user data protection API, and will raise an error when this is not available. To configure
-        the cache to fall back to an unencrypted file instead of raising an
-        error, specify `allow_unencrypted_storage=True`. Defaults to the value of the environment
-        variable AZURE_SODA_ALLOW_UNENCRYPTED_STORAGE.
+        :param weblogin: Whether to try interactive browser authentication (weblogin='enabled') or not
+            (weblogin='disabled'). Experimental: If you want to set additional parameters to control the authentication
+            process, try weblogin='advanced'. Defaults to the value of the environment variable AZURE_SODA_WEBLOGIN. If not
+             specified, weblogin='enabled' will be used.
+        :param credential_path: (only used if weblogin='advanced'). Example usage: 'path_to_file/azure_credential.json'.
+            Define the path and file name where you want to store/persist your AuthenticationRecord in your local
+            system (it does not include sensitive information). This enables access across different applications or
+            process invocations. If it is not set, the access token is only available during the current process.
+            Defaults to the value of the environment variable AZURE_SODA_CREDENTIAL_PATH.
+        :param allow_unencrypted_storage: (only used if weblogin='advanced') By default, the cache is encrypted with the
+            current platform's user data protection API, and will raise an error when this is not available. To configure
+            the cache to fall back to an unencrypted file instead of raising an
+            error, specify `allow_unencrypted_storage=True`. Defaults to the value of the environment
+            variable AZURE_SODA_ALLOW_UNENCRYPTED_STORAGE.
+        """
 
-    :return: some type of AzureCredential
-    """
+        if weblogin is None:
+            self.weblogin = os.environ.get("AZURE_SODA_WEBLOGIN")
+        if self.weblogin is None:
+            self.weblogin = "enabled"
 
-    # Instead of giving control to the user with the login parameter,
-    # would it make sense to TRY DefaultAzureCredential first,
-    # and try InteractiveBrowserCredentialWithCognitiveServiceLogin after that?
+        if allow_unencrypted_storage is None:
+            self.allow_unencrypted_storage = os.environ.get("AZURE_SODA_ALLOW_UNENCRYPTED_STORAGE")
+        if self.allow_unencrypted_storage is None:
+            self.allow_unencrypted_storage = False
 
-    if weblogin is None:
-        weblogin = os.environ.get("AZURE_SODA_WEBLOGIN")
-    if weblogin is None:
-        weblogin = "enabled"
+        if credential_path is None:
+            self.credential_path = os.environ.get("AZURE_SODA_CREDENTIAL_PATH")
+        if self.credential_path is None:
+            self.credential_path = ""
+        # other environment variables are handled via the azure-identity package
 
-    if allow_unencrypted_storage is None:
-        allow_unencrypted_storage = os.environ.get("AZURE_SODA_ALLOW_UNENCRYPTED_STORAGE")
-    if allow_unencrypted_storage is None:
-        allow_unencrypted_storage = False
+    def select_credential(self) \
+            -> DefaultAzureCredentialWithCognitiveServiceLogin | InteractiveBrowserCredentialWithCognitiveServiceLogin:
+        """
+        Select the appropriate Credential class (inherited from ``azure-identity``) to authenticate with Microsoft Azure
+        Entra ID. It is best to be controlled with environment variables.
 
-    if credential_path is None:
-        credential_path = os.environ.get("AZURE_SODA_CREDENTIAL_PATH")
-    if credential_path is None:
-        credential_path = ""
+        The default function behavior is based on
+        ``DefaultAzureCredential(exclude_interactive_browser_credential=False)``,
+        with the authentication workflow described at
+        https://github.com/Azure/azure-sdk-for-python/tree/main/sdk/identity/azure-identity#defaultazurecredential.
 
-    if weblogin == 'enabled':
-        return DefaultAzureCredentialWithCognitiveServiceLogin(weblogin)
-    elif weblogin == 'disabled':
-        return DefaultAzureCredentialWithCognitiveServiceLogin(weblogin)
-    elif weblogin == 'advanced':
-        return InteractiveBrowserCredentialWithCognitiveServiceLogin(allow_unencrypted_storage, credential_path)
+        :return: some type of AzureCredential
+        """
+
+        # Instead of giving control to the user with the login parameter,
+        # would it make sense to TRY DefaultAzureCredential first,
+        # and try InteractiveBrowserCredentialWithCognitiveServiceLogin after that?
+
+        if self.weblogin == 'enabled':
+            return DefaultAzureCredentialWithCognitiveServiceLogin(self.weblogin)
+        elif self.weblogin == 'disabled':
+            return DefaultAzureCredentialWithCognitiveServiceLogin(self.weblogin)
+        elif self.weblogin == 'advanced':
+            return InteractiveBrowserCredentialWithCognitiveServiceLogin(self.allow_unencrypted_storage,
+                                                                         self.credential_path)
+
+
+if __name__ == "__main__":
+    # intended workflow below:
+    load_dotenv()
+
+    # get credentials and access token based on your environment variables
+    credential = CredentialFactory().select_credential()
+    token_provider = credential.get_login_token_to_azure_cognitive_services()
+
+    # custom Azure OpenAI deployment name
+    DEPLOYMENT_NAME = "gpt-35-turbo-1106"
+
+    client = AzureOpenAI(
+        azure_endpoint=os.environ["AZURE_OPENAI_REGIONAL_ENDPOINT"],
+        api_key=token_provider(),
+        api_version="2023-05-15",
+    )
+
+    response = client.chat.completions.create(
+        model=DEPLOYMENT_NAME,
+        messages=[
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": "Does Azure OpenAI support customer managed keys?"},
+            {"role": "assistant", "content": "Yes, customer managed keys are supported by Azure OpenAI."},
+            {"role": "user", "content": "Do other Azure AI services support this too?"}
+        ]
+    )
+
+    print(response.choices[0].message.content)
 
 
 ###########################################################################################

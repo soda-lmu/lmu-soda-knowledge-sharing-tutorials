@@ -29,7 +29,7 @@ from llama_index.core.node_parser import SentenceSplitter
 # Option 1: Use httpimport to load 'azure_authentication' package remotely from GitHub without installing it
 import httpimport
 with httpimport.github_repo('malsch', 'lmu-soda-utils', ref='main'):
-    from azure_authentication.customized_azure_login import select_credential
+    from azure_authentication.customized_azure_login import CredentialFactory
 
 # or install 'azure_authentication' via the pip command, import it afterward:
 # pip install "azure_authentication@git+https://github.com/malsch/lmu-soda-utils.git/#subdirectory=azure_authentication"
@@ -47,7 +47,7 @@ EMBEDDING_DEPLOYMENT_NAME = "text-embedding-ada-002"
 print("Authenticate User & Login to Azure Cognitive Services")
 # Recommendation: Configure your own authentication workflow with environment variables, see the description at
 # https://github.com/malsch/lmu-soda-utils/tree/main/Azure_Authentication/AuthenticationWorkflowSetup.md
-credential = select_credential()
+credential = CredentialFactory().select_credential()
 token_provider = credential.get_login_token_to_azure_cognitive_services()
 
 #######################################################
