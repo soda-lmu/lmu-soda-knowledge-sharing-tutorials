@@ -154,8 +154,8 @@ class CredentialFactory:
 
         # When using UsernamePasswordCredential(), the AZURE_CLIENT_ID parameter is mandatory.
         # We will just use some default client ID based on: https://github.com/Azure/azure-sdk-for-python/issues/19680
-        if os.environ["AZURE_CLIENT_ID"] is None and \
-                os.environ["AZURE_USERNAME"] is not None and os.environ["AZURE_PASSWORD"] is not None:
+        if os.environ.get("AZURE_CLIENT_ID") is None and \
+                os.environ.get("AZURE_USERNAME") is not None and os.environ.get("AZURE_PASSWORD") is not None:
             # Default to Xplat Client ID.
             os.environ["AZURE_CLIENT_ID"] = '04b07795-8ddb-461a-bbee-02f9e1bf7b46'
 
