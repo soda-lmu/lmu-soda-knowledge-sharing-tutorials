@@ -152,6 +152,13 @@ class CredentialFactory:
             self.credential_path = ""
         # other environment variables are handled via the azure-identity package
 
+        # When using UsernamePasswordCredential(), the AZURE_CLIENT_ID parameter is mandatory.
+        # We will just use some default client ID based on: https://github.com/Azure/azure-sdk-for-python/issues/19680
+        if os.environ["AZURE_CLIENT_ID"] is None and \
+                os.environ["AZURE_USERNAME"] is not None and os.environ["AZURE_PASSWORD"] is not None:
+            # Default to Xplat Client ID.
+            os.environ["AZURE_CLIENT_ID"] = '04b07795-8ddb-461a-bbee-02f9e1bf7b46'
+
     def select_credential(self) \
             -> DefaultAzureCredentialWithCognitiveServiceLogin | InteractiveBrowserCredentialWithCognitiveServiceLogin:
         """
@@ -212,10 +219,9 @@ def main():
 
     print(response.choices[0].message.content)
 
+
 if __name__ == "__main__":
     main()
-
-
 
 ###########################################################################################
 # We used azure.identity, a high-level toolkit for developers above.
