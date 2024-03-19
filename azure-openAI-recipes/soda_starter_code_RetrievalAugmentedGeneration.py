@@ -33,7 +33,7 @@ with httpimport.github_repo('malsch', 'lmu-soda-utils', ref='main'):
 
 # or install 'azure_authentication' via the pip command, import it afterward:
 # pip install "azure_authentication@git+https://github.com/malsch/lmu-soda-utils.git/#subdirectory=azure_authentication"
-# from azure_authentication.customized_azure_login import select_credential
+# from azure_authentication.customized_azure_login import CredentialFactory
 
 # Option 2: Load environment variables from .env file
 load_dotenv()
@@ -84,7 +84,7 @@ embed_model = AzureOpenAIEmbedding(
     azure_endpoint=os.environ["AZURE_OPENAI_REGIONAL_ENDPOINT"],
     # use_azure_ad=True, # only useful for debugging purposes?
     api_key=token_provider(),
-    api_version="2023-05-15"  # or use a preview version (e.g., "2024-03-01-preview") for the latest features.
+    api_version="2024-02-01"  # or use a preview version (e.g., "2024-03-01-preview") for the latest features.
     # api_version (How-To): https://stackoverflow.com/questions/76475419/how-can-i-select-the-proper-openai-api-version
 )
 # Alternative: Use HuggingFace Embeddings locally(!!) with llama.index instead of the default embedding-ada-002?
@@ -102,7 +102,7 @@ llm = AzureOpenAI(
     api_key=token_provider(),
     # azure_ad_token=token_provider(),
     # azure_ad_token_provider=token_provider,
-    api_version="2023-05-15"
+    api_version="2024-02-01"
 )
 
 # make these models the default that will be used by llamaIndex

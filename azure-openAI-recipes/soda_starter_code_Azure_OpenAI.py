@@ -10,7 +10,7 @@ with httpimport.github_repo(username='malsch', repo='lmu-soda-utils', ref='main'
 
 # Option 2: Install 'azure_authentication' via the pip command, import it afterward:
 # pip install "azure_authentication@git+https://github.com/malsch/lmu-soda-utils.git/#subdirectory=azure_authentication"
-# from azure_authentication.customized_azure_login import select_credential
+# from azure_authentication.customized_azure_login import CredentialFactory
 
 # Loading environment variables from .env file
 load_dotenv()
@@ -38,7 +38,7 @@ client = AzureOpenAI(
     api_key=token_provider(),  # alternative: insert os.getenv("AZURE_OPENAI_API_KEY")
     # azure_ad_token=token_provider(),          # same outcome
     # azure_ad_token_provider=token_provider,   # same outcome again
-    api_version="2023-05-15",  # or use a preview version (e.g., "2024-03-01-preview") for the latest features.
+    api_version="2024-02-01",  # or use a preview version (e.g., "2024-03-01-preview") for the latest features.
     # api_version (How-To): https://stackoverflow.com/questions/76475419/how-can-i-select-the-proper-openai-api-version
 )
 
