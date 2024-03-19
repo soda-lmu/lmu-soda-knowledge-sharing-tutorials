@@ -5,6 +5,13 @@
 We illustrate the most common authentication workflows here. By adding one of the following code snippets to 
 your `.env`-file, you can implement the authentication workflow that works best for you.
 
+If Two-factor authentication (2FA) is not activated with your personal Azure account, it's easiest
+to log in with your username and password. In case you have 2FA activated, other personalized login 
+methods are detailed below.
+
+At the bottom of the page we mention two authentication methods that work without a personal Azure account. They are 
+only intended for exceptional circumstances.
+
 ### Login with username and password _(recommended)_
 
 Log in with your username and password.
@@ -13,10 +20,16 @@ This will throw an error if Two-factor authentication (2FA) is active for your A
 
 ```
 ## Configure Azure login with username and password
-AZURE_CLIENT_ID=<application_client_id> 	    # Ask your adminstrator for the ID of the Microsoft Entra application
+
 AZURE_USERNAME=<your_azure_username>        
 AZURE_PASSWORD=<your_azure_password>
 ```
+
+Drawbacks:
+
+- Microsoft doesn't recommend this kind of authentication, because it's less secure than other authentication flows.
+- Minor side effect, rarely ever relevant: `os.environ["AZURE_CLIENT_ID"]` takes on some value
+until the current Python process ends.
 
 ### Interactive login with the browser _(default behavior, recommended)_
 
@@ -30,6 +43,8 @@ You can disable interactive browser login with:
 ```
 AZURE_SODA_WEBLOGIN=disabled
 ```
+
+This is useful for debugging, because you'll see an error message if all other authentication methods fail.
 
 ### Customized interactive login with the browser
 
@@ -78,11 +93,37 @@ You need to convince your Azure administrator to share the `AZURE_CLIENT_SECRET`
 
 ```
 # Configure service principal with secret
-# This does not require user credentials!!
+# This does not require user credentials!
 AZURE_TENANT_ID=<tenant_id>                 # Ask your adminstrator for the ID of the application's Microsoft Entra tenant
 AZURE_CLIENT_ID=<application_client_id>     # Ask your adminstrator for the ID of the Microsoft Entra application
 AZURE_CLIENT_SECRET=<client_secret>         # Ask your adminstrator for one of the application's client secrets
 ```
+
+### Use an API key
+
+An API key lets you directly access an API. 
+
+When using Azure's API services, it is only to be used 
+in exceptional use cases if everything else fails. 
+The `AZURE_OPENAI_API_KEY` is not your personal key (=password), but a shared one,
+meaning that others can change it unexpectedly and without upfront notice.
+
+```
+# Configure Azure OpenAI with an api_key (analogue to the OpenAI API)
+# This does not require user credentials!
+AZURE_OPENAI_API_KEY=<azure_openai_key>                             # Ask your administrator for the API_KEY (or you may get it from other places.)
+```
+
+When using API keys, simply set the `api_key` parameter as follows:
+```
+client = AzureOpenAI(
+    azure_endpoint=os.environ["AZURE_OPENAI_REGIONAL_ENDPOINT"],    # API_KEYs in Azure OpenAI are different for every region
+    api_key=os.environ["AZURE_OPENAI_API_KEY"]                      # You would use the token_provider()-function instead of the api_key when working with the azure_authentication package.
+    api_version="2024-02-01"
+)
+```
+
+In this setting, there is no value in using the `azure_authentication` package, because this package doesn't support API keys. 
 
 ## See also
 
