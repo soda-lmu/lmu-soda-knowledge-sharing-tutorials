@@ -102,7 +102,9 @@ llm = AzureOpenAI(
     api_key=token_provider(),
     # azure_ad_token=token_provider(),
     # azure_ad_token_provider=token_provider,
-    api_version="2024-02-01"
+    api_version="2024-02-01",
+    max_retries=3, timeout=60.0  # llama.index default is to time out after only 60 seconds and throw an APITimeoutError
+    # better handling of timeouts is possible with a httpx client
 )
 
 # make these models the default that will be used by llamaIndex

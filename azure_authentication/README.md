@@ -73,6 +73,12 @@ will try a chain of authentication methods, including:
 
 More complex log-in workflows could be programmed using the [Microsoft Authentication Library (MSAL)](https://github.com/AzureAD/microsoft-authentication-library-for-python).
 
+In any case, when you execute the function `token_provider()` (or `get_token()`) you should get an access token. 
+Access tokens in Azure expire after approx. 1 hour if they are not refreshed during this time.
+If you try using an API after the access token expired, you will get an authentication error. For more details, 
+see the [token documentation](https://learn.microsoft.com/en-us/entra/identity-platform/security-tokens)
+on the Azure Identity platform.
+
 ## What is the added value of the `azure_authentication` package?
 
 By default, the `azure_authentication` package calls 
