@@ -8,9 +8,9 @@ Typical usage example:
 
     import httpimport
     with httpimport.github_repo(username='malsch', repo='lmu-soda-utils', ref='main'):
-        from azure_authentication.customized_azure_login import select_credential
+        from azure_authentication.customized_azure_login import CredentialFactory
 
-    credential = select_credential()
+    credential = CredentialFactory().select_credential()
     token_provider = credential.get_login_token_to_azure_cognitive_services()
 """
 
@@ -25,7 +25,21 @@ from openai import AzureOpenAI
 import azure.identity
 
 
-class DefaultAzureCredentialWithCognitiveServiceLogin(azure.identity.DefaultAzureCredential):
+class _AzureConnectors:
+
+    def get_login_token_to_azure_cognitive_services(self) -> Callable[[], str]:
+        """
+        Authenticate with Microsoft Entra ID against Azure Cognitive Services.
+
+        In simple words, this means that you get a personalized token to log in to Azure Cognitive
+        Services (e.g. Azure OpenAI)
+
+        :return: A callable that returns a bearer token.
+        """
+        return azure.identity.get_bearer_token_provider(self, "https://cognitiveservices.azure.com/.default")
+
+
+class _CustomizedDefaultAzureCredential(azure.identity.DefaultAzureCredential, _AzureConnectors):
 
     def __init__(self, weblogin):
         """
@@ -42,54 +56,32 @@ class DefaultAzureCredentialWithCognitiveServiceLogin(azure.identity.DefaultAzur
         elif weblogin == 'disabled':
             super().__init__(exclude_interactive_browser_credential=True)
 
-    def get_login_token_to_azure_cognitive_services(self) -> Callable[[], str]:
-        """
-        Authenticate with Microsoft Entra ID against Azure Cognitive Services.
 
-        In simple words, this means that you get a personalized token to log in to Azure Cognitive
-        Services (e.g. Azure OpenAI)
-
-        :return: A callable that returns a bearer token.
-        """
-        return azure.identity.get_bearer_token_provider(self, "https://cognitiveservices.azure.com/.default")
-
-
-class InteractiveBrowserCredentialWithCognitiveServiceLogin(azure.identity.InteractiveBrowserCredential):
+class _CustomizedInteractiveBrowserCredential(azure.identity.InteractiveBrowserCredential, _AzureConnectors):
     """Opens a browser to interactively authenticate users.
 
     We enable persistent token caching with interactive login, see the documentation at
     https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/identity/azure-identity/TOKEN_CACHING.md
-    This is not possible with the class DefaultAzureCredentialWithCognitiveServiceLogin"""
+    This is not possible with the class _CustomizedDefaultAzureCredential"""
 
     def __init__(self, allow_unencrypted_storage: bool, credential_path: str):
         self.credential_path = credential_path
 
         if not credential_path:
-            self.create_authentication_record(allow_unencrypted_storage=True)
+            self._create_authentication_record(allow_unencrypted_storage=True)
         else:
             if os.path.exists(self.credential_path):
-                try:
-                    with open(self.credential_path, 'r') as f:
-                        deserialized_record = azure.identity.AuthenticationRecord.deserialize(json.load(f))
-                        cache_persistence = azure.identity.TokenCachePersistenceOptions(allow_unencrypted_storage=True)
-                        super().__init__(cache_persistence_options=cache_persistence,
-                                         authentication_record=deserialized_record)
-                except BaseException:
-                    # one should not handle exceptions this way
-                    print("An Exception occurred:" + BaseException.__cause__)
-                    print("Initiating a new authentication record...")
-                    self.create_authentication_record(allow_unencrypted_storage=allow_unencrypted_storage)
-                    self.persist_record_on_disk()
+                self._load_authentication_record_from_disk(allow_unencrypted_storage)
             else:
-                self.create_authentication_record(allow_unencrypted_storage=allow_unencrypted_storage)
-                self.persist_record_on_disk()
+                self._create_authentication_record(allow_unencrypted_storage=allow_unencrypted_storage)
+                self._persist_record_on_disk()
 
-    def create_authentication_record(self, allow_unencrypted_storage: bool):
+    def _create_authentication_record(self, allow_unencrypted_storage: bool):
 
         super().__init__(cache_persistence_options=azure.identity.TokenCachePersistenceOptions(
             allow_unencrypted_storage=allow_unencrypted_storage))
 
-    def persist_record_on_disk(self):
+    def _persist_record_on_disk(self):
         if self.credential_path:
             record = self.authenticate()
             record_json = record.serialize()
@@ -99,16 +91,20 @@ class InteractiveBrowserCredentialWithCognitiveServiceLogin(azure.identity.Inter
             print("""You can persist token caching to reduce the number of logins required. 
                         See details in the documentation on GitHub.""")
 
-    def get_login_token_to_azure_cognitive_services(self) -> Callable[[], str]:
-        """
-        Authenticate with Microsoft Entra ID against Azure Cognitive Services.
+    def _load_authentication_record_from_disk(self, allow_unencrypted_storage):
 
-        In simple words, this means that you get a personalized token to log in to Azure Cognitive
-        Services (e.g. Azure OpenAI)
-
-        :return: A callable that returns a bearer token.
-        """
-        return azure.identity.get_bearer_token_provider(self, "https://cognitiveservices.azure.com/.default")
+        try:
+            with open(self.credential_path, 'r') as f:
+                deserialized_record = azure.identity.AuthenticationRecord.deserialize(json.load(f))
+                cache_persistence = azure.identity.TokenCachePersistenceOptions(allow_unencrypted_storage=True)
+                super().__init__(cache_persistence_options=cache_persistence,
+                                 authentication_record=deserialized_record)
+        except BaseException:
+            # one should not handle exceptions this way
+            print("An Exception occurred:" + BaseException.__cause__)
+            print("Initiating a new authentication record...")
+            self._create_authentication_record(allow_unencrypted_storage=allow_unencrypted_storage)
+            self._persist_record_on_disk()
 
 
 class CredentialFactory:
@@ -122,16 +118,16 @@ class CredentialFactory:
 
         :param weblogin: Whether to try interactive browser authentication (weblogin='enabled') or not
             (weblogin='disabled'). Experimental: If you want to set additional parameters to control the authentication
-            process, try weblogin='advanced'. Defaults to the value of the environment variable AZURE_SODA_WEBLOGIN. If not
-             specified, weblogin='enabled' will be used.
+            process, try weblogin='advanced'. Defaults to the value of the environment variable AZURE_SODA_WEBLOGIN. If
+             not specified, weblogin='enabled' will be used.
         :param credential_path: (only used if weblogin='advanced'). Example usage: 'path_to_file/azure_credential.json'.
             Define the path and file name where you want to store/persist your AuthenticationRecord in your local
             system (it does not include sensitive information). This enables access across different applications or
             process invocations. If it is not set, the access token is only available during the current process.
             Defaults to the value of the environment variable AZURE_SODA_CREDENTIAL_PATH.
         :param allow_unencrypted_storage: (only used if weblogin='advanced') By default, the cache is encrypted with the
-            current platform's user data protection API, and will raise an error when this is not available. To configure
-            the cache to fall back to an unencrypted file instead of raising an
+            current platform's user data protection API, and will raise an error when this is not available. To
+            configure the cache to fall back to an unencrypted file instead of raising an
             error, specify `allow_unencrypted_storage=True`. Defaults to the value of the environment
             variable AZURE_SODA_ALLOW_UNENCRYPTED_STORAGE.
         """
@@ -160,7 +156,7 @@ class CredentialFactory:
             os.environ["AZURE_CLIENT_ID"] = '04b07795-8ddb-461a-bbee-02f9e1bf7b46'
 
     def select_credential(self) \
-            -> DefaultAzureCredentialWithCognitiveServiceLogin | InteractiveBrowserCredentialWithCognitiveServiceLogin:
+            -> _CustomizedDefaultAzureCredential | _CustomizedInteractiveBrowserCredential:
         """
         Select the appropriate Credential class (inherited from ``azure-identity``) to authenticate with Microsoft Azure
         Entra ID. It is best to be controlled with environment variables.
@@ -175,15 +171,15 @@ class CredentialFactory:
 
         # Instead of giving control to the user with the login parameter,
         # would it make sense to TRY DefaultAzureCredential first,
-        # and try InteractiveBrowserCredentialWithCognitiveServiceLogin after that?
+        # and try _CustomizedInteractiveBrowserCredential after that?
 
         if self.weblogin == 'enabled':
-            return DefaultAzureCredentialWithCognitiveServiceLogin(self.weblogin)
+            return _CustomizedDefaultAzureCredential(self.weblogin)
         elif self.weblogin == 'disabled':
-            return DefaultAzureCredentialWithCognitiveServiceLogin(self.weblogin)
+            return _CustomizedDefaultAzureCredential(self.weblogin)
         elif self.weblogin == 'advanced':
-            return InteractiveBrowserCredentialWithCognitiveServiceLogin(self.allow_unencrypted_storage,
-                                                                         self.credential_path)
+            return _CustomizedInteractiveBrowserCredential(self.allow_unencrypted_storage,
+                                                           self.credential_path)
 
 
 def main():
@@ -204,7 +200,7 @@ def main():
     client = AzureOpenAI(
         azure_endpoint=os.environ["AZURE_OPENAI_REGIONAL_ENDPOINT"],
         api_key=token_provider(),
-        api_version="2023-05-15",
+        api_version="2024-02-01",
     )
 
     response = client.chat.completions.create(
