@@ -102,7 +102,7 @@ client = AsyncAzureOpenAI(
 )
 
 
-async def get_capital(country: str, sem: asyncio.Semaphore) -> None:
+async def get_capital(country: str, sem: asyncio.Semaphore):
     """
     Query an openAI chat model for the capital of 'country'
     """
