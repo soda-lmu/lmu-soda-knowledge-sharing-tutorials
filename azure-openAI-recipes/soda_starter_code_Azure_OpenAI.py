@@ -61,6 +61,8 @@ response = client.chat.completions.create(
 print(response.choices[0].message.content)
 print("Success! At this point you will probably want to explore the chat completions reference from openai:")
 print("https://platform.openai.com/docs/api-reference/chat")
+print("Or you can check out other tutorials. Here is a nice one:")
+print("https://microsoft.github.io/generative-ai-for-beginners/#/")
 
 ####################################################################
 # Error handling and usage limitations
@@ -179,3 +181,6 @@ print("All queries were executed 'in parallel', meaning that we only need to wai
 # In case you want to carry out millions of API calls in parallel, it is easy to exceed the rate limit. Here is a script
 # that optimizes large numbers of parallel requests.
 # https://github.com/openai/openai-cookbook/blob/main/examples/api_request_parallel_processor.py
+# 
+# OpenAI introduced in April 2024 a separate API to run large batches of requests asynchronously at half the cost, see
+# https://platform.openai.com/docs/api-reference/batch (as of April 2024, this feature is not available with Azure OpenAI).
