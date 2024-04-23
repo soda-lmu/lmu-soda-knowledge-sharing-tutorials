@@ -28,11 +28,11 @@ from llama_index.core.node_parser import SentenceSplitter
 
 # Option 1: Use httpimport to load 'azure_authentication' package remotely from GitHub without installing it
 import httpimport
-with httpimport.github_repo('malsch', 'lmu-soda-utils', ref='main'):
-    from azure_authentication.customized_azure_login import CredentialFactory
+with httpimport.remote_repo('https://raw.githubusercontent.com/soda-lmu/azure-auth-helper-python/main/src/azure_authentication/'):
+    from customized_azure_login import CredentialFactory
 
-# or install 'azure_authentication' via the pip command, import it afterward:
-# pip install "azure_authentication@git+https://github.com/malsch/lmu-soda-utils.git/#subdirectory=azure_authentication"
+# Option 2: Install 'azure_authentication' via the pip command, import it afterward:
+# pip install "azure_authentication@git+https://github.com/soda-lmu/azure-auth-helper-python.git"
 # from azure_authentication.customized_azure_login import CredentialFactory
 
 # Option 2: Load environment variables from .env file

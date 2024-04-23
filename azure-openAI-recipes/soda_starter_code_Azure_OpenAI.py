@@ -5,11 +5,11 @@ from openai import AzureOpenAI
 
 # Option 1: Use httpimport to load 'azure_authentication' package remotely from GitHub without installing it
 import httpimport
-with httpimport.github_repo(username='malsch', repo='lmu-soda-utils', ref='main'):
-    from azure_authentication.customized_azure_login import CredentialFactory
+with httpimport.remote_repo('https://raw.githubusercontent.com/soda-lmu/azure-auth-helper-python/main/src/azure_authentication/'):
+    from customized_azure_login import CredentialFactory
 
 # Option 2: Install 'azure_authentication' via the pip command, import it afterward:
-# pip install "azure_authentication@git+https://github.com/malsch/lmu-soda-utils.git/#subdirectory=azure_authentication"
+# pip install "azure_authentication@git+https://github.com/soda-lmu/azure-auth-helper-python.git"
 # from azure_authentication.customized_azure_login import CredentialFactory
 
 # Loading environment variables from .env file
