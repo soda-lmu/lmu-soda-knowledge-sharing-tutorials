@@ -62,7 +62,7 @@ token_provider = credential.get_login_token_to_azure_cognitive_services()
 
 tmp_dir_name = "tmp"
 file_name = "paul_graham_essay.txt"
-url = ("https://raw.githubusercontent.com/run-llama/llama_index/main/docs/examples/data/"
+url = ("https://raw.githubusercontent.com/run-llama/llama_index/main/docs/docs/examples/data/"
        "paul_graham/paul_graham_essay.txt")
 os.makedirs(tmp_dir_name, exist_ok=True)
 
