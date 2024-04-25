@@ -55,26 +55,47 @@ described in the [Authentication Workflow setup](https://github.com/soda-lmu/azu
 
 # Understand the setup
 
-It may help to point to a couple of resources in the Azure portal. 
+It may help to point to a couple of resources in the Azure portal.
 
 - Open the Azure Portal: https://portal.azure.com/#home
     - Search for `Azure OpenAI`. You should see at least one Azure OpenAI service running.
-    - Search for `resource groups` \ `Ressourcengruppen`. You will find a list of ressource groups that you have access to. There can be multiple ressources in each ressource group, one of them should be the Azure OpenAI service you have found before.
-- Open the Azure OpenAI service you have just identified.
+    - Search for `Resource groups`. You will find a list of ressource groups that you have access to. There can be multiple ressources in each ressource group, one of them should be the Azure OpenAI service you have found before.
 
+The Azure OpenAI service and other services you have just identified do not belong to you. They are shared ressources that accomodate multiple users. Keep this in mind when we now explore how the Azure OpenAI service is currently being used.
 
-
-
+- Open the Azure OpenAI service you have just identified. On the left, you should see a number of tabs: `Overview`, `Activity log`, `Access control (IAM)`, and so on. A couple of them can be helpful for you:
+    - Via `Keys and Endpoint` you get to see the Azure endpoint (Format: `https://<instance-name>.openai.azure.com/`) that you use for your queries.
+    - Via `Cost analysis` you can explore & analyze how much money all the different API calls to this ressource cost.
+    - Via `Metrics` you can explore & analyze by how much and in which ways this ressource was recently being used. This can be a bit confusing. The `Overview` tab is probably more helpful for a first glimpse on current usage.
+ 
 # Monitor usage
 
-Although you won't pay for Azure OpenAI, someone else does, and it can get expensive if you run many long prompts. You should check out current prices:
+Although you won't pay for Azure OpenAI, someone else does, and it can get expensive, especially if you run many long prompts. You should check out current prices:
 
 - [Azure OpenAI prices](https://azure.microsoft.com/en-us/pricing/details/cognitive-services/openai-service/)
 
-How do you know how many resources you used? You should monitor your usage.
+We run this service for small workloads only. If you plan to make <ins>**more than 500 requests to the API within a single month**</ins> (or 10.000 requests if you are using the very fast and cheap GPT-3.5-Turbo model), please talk to your supervisor/administrator first and inform her about the number of API requests and the approximate budget you plan to spend.
 
+How do you know how many resources you used? You should monitor your usage. And there is one more tool to do this that we haven't described yet:
 
+- Open the Azure Portal: https://portal.azure.com/#home and 
+    - Search for `Dashboard` or `Dashboard Hub`.
+    - You should be able to find a Dashboard called `Openai easyAccess Monitor`.
+
+This dashboard is meant to inform all users who use the same shared instance you use about their recent usage.
+
+### Quotas
+
+Besides cost, there is one additional constraint you may face: Administrators can set quotas separately for each deployment, for example, the quota for GPT-3.5 is set to 100k tokens per minute (TPM). You can check the available quota at https://oai.azure.com/ in the "Deployments" tab. A Requests-Per-Minute (RPM) rate limit will also be enforced, whose value is set proportionally to the TPM assignment using the following ratio: 6 RPM per 1000 TPM; i.e., 6*100 = 600 RPM (or 600/60 = 10 Requests-Per-Second) are allowed with the aforementioned GPT-3.5-Turbo model.
+
+If you are using cheap models, like GPT-3.5, these quotas will most likely not matter in practice for your work. With more expensive models this may be different. Please contact your SODA LMU contact person if the preset quotas impair your productivity.
 
 # Weblinks
 
-- Documentation for the OpenAI-Python-Package is available at https://platform.openai.com/docs/api-reference/chat/create?lang=python 
+- Documentation of the `openai`-Package (Python):
+    - https://github.com/openai/openai-python
+    - https://platform.openai.com/docs/api-reference/chat/create?lang=python
+- [Azure OpenAI pricing](https://azure.microsoft.com/en-us/pricing/details/cognitive-services/openai-service/#pricing)
+- Azure OpenAI documentation:
+    - [Intro to Azure OpenAI Service](https://learn.microsoft.com/en-us/training/modules/explore-azure-openai/)
+    - [Documentation Overview](https://learn.microsoft.com/en-us/azure/ai-services/openai/)
