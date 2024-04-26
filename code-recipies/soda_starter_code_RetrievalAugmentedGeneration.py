@@ -28,25 +28,23 @@ from llama_index.core.node_parser import SentenceSplitter
 
 # Option 1: Use httpimport to load 'azure_authentication' package remotely from GitHub without installing it
 import httpimport
-with httpimport.remote_repo('https://raw.githubusercontent.com/soda-lmu/azure-auth-helper-python/main/src/azure_authentication/'):
+with httpimport.remote_repo('https://raw.githubusercontent.com/soda-lmu/azure-auth-helper-python/main/src'
+                            '/azure_authentication/'):
     from customized_azure_login import CredentialFactory
 
 # Option 2: Install 'azure_authentication' via the pip command, import it afterward:
 # pip install "azure_authentication@git+https://github.com/soda-lmu/azure-auth-helper-python.git"
 # from azure_authentication.customized_azure_login import CredentialFactory
 
-# Option 2: Load environment variables from .env file
+# Loading environment variables from .env file
 load_dotenv()
 
-# Choose the OpenAI Chat and Embedding model you want to use.
-# The model name selected here most match a deployment name from your OpenAI subscription.
-# The deployment needs to be available in the region set by os.environ["AZURE_OPENAI_REGIONAL_ENDPOINT"]
+# Choose the OpenAI Chat and Embedding models you want to use.
+# The deployment needs to be available at the instance set by os.environ["AZURE_OPENAI_ENDPOINT"]
 LLM_DEPLOYMENT_NAME = "gpt-35-turbo-1106"
 EMBEDDING_DEPLOYMENT_NAME = "text-embedding-ada-002"
 
 print("Authenticate User & Login to Azure Cognitive Services")
-# Recommendation: Configure your own authentication workflow with environment variables, see the description at
-# https://github.com/malsch/lmu-soda-utils/tree/main/Azure_Authentication/AuthenticationWorkflowSetup.md
 credential = CredentialFactory().select_credential()
 token_provider = credential.get_login_token_to_azure_cognitive_services()
 
@@ -81,7 +79,7 @@ print(os.listdir(tmp_dir_name))
 embed_model = AzureOpenAIEmbedding(
     model="text-embedding-ada-002",
     deployment_name=EMBEDDING_DEPLOYMENT_NAME,
-    azure_endpoint=os.environ["AZURE_OPENAI_REGIONAL_ENDPOINT"],
+    azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
     # use_azure_ad=True, # only useful for debugging purposes?
     api_key=token_provider(),
     api_version="2024-02-01"  # or use a preview version (e.g., "2024-03-01-preview") for the latest features.
@@ -97,7 +95,7 @@ embed_model = AzureOpenAIEmbedding(
 
 llm = AzureOpenAI(
     engine=LLM_DEPLOYMENT_NAME, model="gpt-35-turbo-16k", temperature=0.0,
-    azure_endpoint=os.environ["AZURE_OPENAI_REGIONAL_ENDPOINT"],
+    azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
     # use_azure_ad=True, # only useful for debugging purposes?
     api_key=token_provider(),
     # azure_ad_token=token_provider(),
@@ -107,7 +105,7 @@ llm = AzureOpenAI(
     # better handling of timeouts is possible with a httpx client
 )
 
-# make these models the default that will be used by llamaIndex
+# make these models the default to be used by llamaIndex
 Settings.llm = llm
 Settings.embed_model = embed_model
 

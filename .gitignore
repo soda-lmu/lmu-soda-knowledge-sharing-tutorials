@@ -1,4 +1,4 @@
-azure-openAI-recipes/.env
+/code-recipes/.env
 
 # azure_authentification
 azure_credential.json

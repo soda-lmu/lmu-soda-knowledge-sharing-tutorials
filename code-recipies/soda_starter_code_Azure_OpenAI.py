@@ -5,7 +5,8 @@ from openai import AzureOpenAI
 
 # Option 1: Use httpimport to load 'azure_authentication' package remotely from GitHub without installing it
 import httpimport
-with httpimport.remote_repo('https://raw.githubusercontent.com/soda-lmu/azure-auth-helper-python/main/src/azure_authentication/'):
+with httpimport.remote_repo('https://raw.githubusercontent.com/soda-lmu/azure-auth-helper-python/main/src'
+                            '/azure_authentication/'):
     from customized_azure_login import CredentialFactory
 
 # Option 2: Install 'azure_authentication' via the pip command, import it afterward:
@@ -19,14 +20,13 @@ print("####################################################################")
 print("# Hello World example: Azure OpenAI")
 print("####################################################################")
 
-# Choose the OpenAI model you want to use.
-# The model name selected here most match a deployment name from your OpenAI subscription.
-# The deployment needs to be available in the region set by os.environ["AZURE_OPENAI_REGIONAL_ENDPOINT"]
+# Choose the OpenAI model (in Azure OpenAI: the deployment name) you want to use.
+# The deployment needs to be available at the instance set by os.environ["AZURE_OPENAI_ENDPOINT"]
 DEPLOYMENT_NAME = "gpt-35-turbo-1106"
 
 print("Authenticate User & Login to Azure Cognitive Services")
 # Recommendation: Configure your own authentication workflow with environment variables, see the description at
-# https://github.com/malsch/lmu-soda-utils/tree/main/azure_authentication/AuthenticationWorkflowSetup.md
+# https://github.com/soda-lmu/azure-auth-helper-python/blob/main/AuthenticationWorkflowSetup.md
 credential = CredentialFactory().select_credential()
 token_provider = credential.get_login_token_to_azure_cognitive_services()
 
@@ -38,7 +38,7 @@ print("Instantiate Azure OpenAI Client")
 # - pass 'token_provider' as an argument to 'azure_ad_token_provider'. Note that '()' is missing here.
 # For the api_key argument we can either pass an API_KEY or the token_provider() we just created.
 client = AzureOpenAI(
-    azure_endpoint=os.environ["AZURE_OPENAI_REGIONAL_ENDPOINT"],
+    azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
     api_key=token_provider(),  # alternative: insert os.getenv("AZURE_OPENAI_API_KEY")
     # azure_ad_token=token_provider(),          # same outcome
     # azure_ad_token_provider=token_provider,   # same outcome again
@@ -97,7 +97,7 @@ import time
 from openai import AsyncAzureOpenAI
 
 client = AsyncAzureOpenAI(
-    azure_endpoint=os.environ["AZURE_OPENAI_REGIONAL_ENDPOINT"],
+    azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
     api_key=token_provider(),
     api_version="2024-02-01",
     timeout=600.0,  # throw APITimeoutError after 10 minutes without a response (default behavior)
