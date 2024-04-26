@@ -4,8 +4,8 @@
 azure_credential.json
 
 # soda_starter_code_RetrievalAugmentedGeneration.py
-.storage/
-.tmp/
+/storage/
+/tmp/
 
 # PyCharm
 .idea/
