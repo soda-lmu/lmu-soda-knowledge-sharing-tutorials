@@ -9,7 +9,7 @@ You want to share some useful educational material? Please do so. You find an er
 **Prerequisites**:
 
 - Access to use Azure OpenAI Service was granted by your administrator
-- You have been given a value for the environment variable `AZURE_OPENAI_REGIONAL_ENDPOINT` (probably within the .env file you should have received).
+- You have been given a value for the environment variable `AZURE_OPENAI_ENDPOINT` (probably within the .env file you should have received).
 
 **Related tutorials**:
 
