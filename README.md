@@ -1,40 +1,20 @@
 # LMU SODA Utilities
 
-Welcome. This repository is intended to share (Python/R) code with colleagues at the [LMU SODA chair](https://www.stat.lmu.de/soda/en/).
+Welcome!
 
-The by far most important content in this repository is some example code to help you get started using
-certain technologies. Until now, the repository is only about how to access and use Azure OpenAI's models.
+This repository is intended to share knowledge and code (Python/R/...?) with colleagues and students at the [LMU SODA chair](https://www.stat.lmu.de/soda/en/). It contains three types of materials:
 
-### Prerequisites
+### 1 Tutorials
 
-- Access to use Azure OpenAI Service was granted by your Azure administrator
-- Basic knowledge of Python
+We share some [introductionary tutorials](./azure-quick-start/) that should help you getting started with some technologies we like to use. All tutorials available so far are related to our Azure subscription.
 
-### Next steps
+> [!TIP] A great entry point to the content in this repository is our [Azure OpenAI tutorial](./azure-quick-start/azure-open-ai-tutorial.md).
 
-1. Navigate to the folder [azure-openAI-recipes](./azure-openAI-recipes). This folder
-contains illustrative code examples to get started with Azure Open AI. Scan its documentation, you will probably 
-look at it more carefully while doing step 2.
-2. Run the example code [Chat Completions with Azure OpenAI](./azure-openAI-recipes/soda_starter_code_Azure_OpenAI.py) 
-that sits in this folder. By doing so, you will:
-   - run a basic recipe that calls the GPT-3.5 Azure OpenAI API from Python using the `openai` package
-   - learn how to install the `azure_authentication` package
-   - log in manually to Azure OpenAI and learn how you can set environment variables via `.env` files, 
-   automating the log-in process
+### 2 Code Recipies
 
-### Bonus materials
+The folder [code-recipies](./code-recipies/) contains simple recipies (Python/R/...?) you can try on you own. 
 
-#### More recipes
 
-- Another recipe lets you try 
-[Retrieval Augmented Generation (RAG)](./azure-openAI-recipes/soda_starter_code_RetrievalAugmentedGeneration.py) 
-with `llamaIndex`.
+### 3 Technological Literacy
 
-#### Python packages
-
-- You can find the `azure_authentication` package in the folder [azure_authentication](./azure_authentication).
-It is a very simple Python package that lets us customize the login workflows by using environment variables.
-
-#### Learning nuggets
-
-- There are some random tutorials in the folder [technological-literacy](./technological-literacy).
+The folder [technological-literacy](./technological-literacy) contains very brief and seemingly random introductions to diverse technical topics one should know about to work more efficiently with ones computer. This is not the focus of the repository. We will link to these introductions from other files within the repository.

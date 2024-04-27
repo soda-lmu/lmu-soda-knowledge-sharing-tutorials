@@ -25,14 +25,8 @@ The problem is: At the SODA chair we do not use API keys for Azure. The example 
 
 We recommend that you start by running the very basic introduction [1. Chat Completions with Azure OpenAI](../code-recipies/soda_starter_code_Azure_OpenAI.py). It shows how you can log in using your personal account and start chatting with the GPT-3.5-ChatBot via Azure.
 
-| :exclamation:  You have to read about this   |
-|----------------------------------------------|
-
-:arrow_forward:
-
 > [!TIP]
-> Run the example code [Chat Completions with Azure OpenAI](./azure-openAI-recipes/soda_starter_code_Azure_OpenAI.py).
-> By doing so, you will:
+> Run now the example code :arrow_forward: [Chat Completions with Azure OpenAI](./azure-openAI-recipes/soda_starter_code_Azure_OpenAI.py). You will:
 > - run a basic recipe that calls the GPT-3.5 Azure OpenAI API from Python using the `openai` package
 > - learn how to install the `azure_authentication` package
 > - log in manually to Azure OpenAI and learn how you can set environment variables via `.env` files, 
