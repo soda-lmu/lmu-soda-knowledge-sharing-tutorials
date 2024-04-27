@@ -8,7 +8,8 @@ This repository is intended to share knowledge and code (Python/R/...?) with col
 
 We share some [introductionary tutorials](./azure-quick-start/) that should help you getting started with some technologies we like to use. All tutorials available so far are related to our Azure subscription.
 
-> [!TIP] A great entry point to the content in this repository is our [Azure OpenAI tutorial](./azure-quick-start/azure-open-ai-tutorial.md).
+> [!TIP] 
+> A great entry point to the content in this repository is our [Azure OpenAI tutorial](./azure-quick-start/azure-open-ai-tutorial.md).
 
 ### 2 Code Recipies
 
