@@ -6,7 +6,7 @@ Please check out our growing list of Azure-related tutorials.
 
 Azure OpenAI Service provides REST API access to OpenAI's powerful models (e.g., GPT-4).
 
-Quickstart
+:rocket: Quickstart :rocket:
 
 1. [Getting started using Azure OpenAI](./azure-open-ai-tutorial.md)
 2. [Try out different recipies](../code-recipies/)
