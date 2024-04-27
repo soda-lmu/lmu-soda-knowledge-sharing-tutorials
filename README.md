@@ -1,4 +1,4 @@
-# LMU SODA Utilities
+# Knowledge Sharing
 
 Welcome!
 
