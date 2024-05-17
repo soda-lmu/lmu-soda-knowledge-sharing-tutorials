@@ -24,7 +24,7 @@ The problem is: At the SODA chair we do not use API keys for Azure. The example 
 We recommend that you start by running the very basic introduction [1. Chat Completions with Azure OpenAI](../code-recipies/soda_starter_code_Azure_OpenAI.py). It shows how you can log in using your personal account and start chatting with the GPT-3.5-ChatBot via Azure.
 
 > [!TIP]
-> Run now the example code :arrow_forward: [Chat Completions with Azure OpenAI](../code-recipies/soda_starter_code_Azure_OpenAI.py)*. You will:
+> Run now the example code :arrow_forward: [Chat Completions with Azure OpenAI](../code-recipies/soda_starter_code_Azure_OpenAI.py). You will:
 > - run a basic recipe that calls the GPT-3.5 Azure OpenAI API from Python using the `openai` package
 > - learn how to install the `azure_authentication` package
 > - log in manually to Azure OpenAI and learn how you can set environment variables via `.env` files, 
@@ -34,6 +34,14 @@ You can then try other models - like different versions of GPT-4 - that are avai
 
 After running this example recipe, you have everything what you need to access Azure OpenAI. You can continue by checking out additional [code recipies](../code-recipies/) that we provide or look at [OpenAI's API documentation](https://platform.openai.com/docs/introduction) to learn more about openAI's powerful models and how to use them.
 
+### Troubleshooting
+
+Did you encounter any errors when running the example code? Here are a few hints:
+
+- When you executed the function `token_provider()`, an access token was given to you. Access tokens in Azure expire after approx. 1 hour, if they are not refreshed during this time. Writing prompts after the token has expired will result in an `AuthenticationError: Error code: 401`
+- API keys and other features, like the uploading of datasets, are disabled for you. Some error messages may appear in https://oai.azure.com/ when you try to use these features anyway. Don't worry, the basic functionality of chatting with openai's chat models will still work. 
+    - Please talk to your supervisor/administrator if you need any additional features for your project.
+    - Azures help page for [Role-based access control](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/role-based-access-control) describes in detail the permissions and features you can access. The default role you currently have is `Cognitive Services OpenAI User`.
 
 ## Store your personal credentials to speed up log-in processes
 
