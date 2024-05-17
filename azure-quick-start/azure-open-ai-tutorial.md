@@ -41,7 +41,7 @@ Did you encounter any errors when running the example code? Here are a few hints
 - When you executed the function `token_provider()`, an access token was given to you. Access tokens in Azure expire after approx. 1 hour, if they are not refreshed during this time. Writing prompts after the token has expired will result in an `AuthenticationError: Error code: 401`
 - API keys and other features, like the uploading of datasets, are disabled for you. Some error messages may appear in https://oai.azure.com/ when you try to use these features anyway. Don't worry, the basic functionality of chatting with openai's chat models will still work. 
     - Please talk to your supervisor/administrator if you need any additional features for your project.
-    - Azures help page for [Role-based access control](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/role-based-access-control) describes in detail the permissions and features you can access. The default role you currently have is `Cognitive Services OpenAI User`.
+    - Azures help page for [Role-based access control](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/role-based-access-control) describes in detail your permissions and the features you can access. The default role you currently have is `Cognitive Services OpenAI User`.
 
 ## Store your personal credentials to speed up log-in processes
 
