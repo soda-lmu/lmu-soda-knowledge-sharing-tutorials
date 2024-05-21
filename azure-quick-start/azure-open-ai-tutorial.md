@@ -11,6 +11,9 @@ Welcome! You have been given an account from the SODA chair to use Azure OpenAI 
 
 - Azure Portal: https://portal.azure.com/#home to complete your registration.
     - If you want to manage your personal account, go to: https://myaccount.microsoft.com/
+- LobeChat: https://chat.soda-lab.org
+    - Chat with Azure openai's latest models via this nice-looking GUI, paid by our group
+    - After writing a prompt, select SSO-Anmeldung (=SSO-Login) and sign in with Azure Active directory.
 - Azure OpenAI Studio: https://oai.azure.com/
     - Go to the Chat-Playground and start chatting with an OpenAI model.
     - Go to `Deployments` (=`Bereitstellungen`) to find all the different models you can use.
