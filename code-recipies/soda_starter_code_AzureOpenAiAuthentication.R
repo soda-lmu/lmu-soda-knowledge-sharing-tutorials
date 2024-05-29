@@ -12,6 +12,8 @@ library(AzureAuth)  # Library for Azure authentication
 library(httr)       # Library for HTTP requests
 library(readr)      # Library for reading files
 library(jsonlite)   # Library for handling JSON data
+library(dotenv)     # Library for reading .env files
+
 
 # Function to load environment variables from a .env file
 
@@ -22,23 +24,8 @@ library(jsonlite)   # Library for handling JSON data
 # AZURE_PASSWORD=YOURPASSWORD
 # AZURE_OPENAI_ENDPOINT=YOURENDPOINT
 
-
-load_env <- function(file = ".env") {
-  env_vars <- read_lines(file)  # Read all lines from the .env file
-  for (line in env_vars) {
-    if (nzchar(line) && !startsWith(line, "#")) {  # Ignore empty lines and comments
-      key_value <- strsplit(line, "=")[[1]]  # Split the line into key and value
-      if (length(key_value) == 2) {
-        key <- key_value[1]  # Extract the key
-        value <- key_value[2]  # Extract the value
-        do.call(Sys.setenv, setNames(list(value), key))  # Set the environment variable
-      }
-    }
-  }
-}
-
 # Load environment variables from the .env file
-load_env()
+dotenv::load_dot_env(".env")
 
 # Retrieve the environment variables using Sys.getenv()
 tenant_id <- Sys.getenv("AZURE_TENANT_ID")
@@ -66,8 +53,7 @@ token <- get_azure_token(
 client <- list(
   azure_endpoint = endpoint,               # Azure OpenAI endpoint from environment variables
   api_key = token$credentials$access_token, # Use the token obtained from Azure AD
-  api_version = "2024-02-01",              # API version to use
-  timeout = 600.0                          # Timeout for API requests (in seconds)
+  api_version = "2024-02-01"              # API version to use
 )
 
 # Function to call the OpenAI API
