@@ -41,7 +41,7 @@ load_dotenv()
 
 # Choose the OpenAI Chat and Embedding models you want to use.
 # The deployment needs to be available at the instance set by os.environ["AZURE_OPENAI_ENDPOINT"]
-LLM_DEPLOYMENT_NAME = "gpt-35-turbo-1106"
+LLM_DEPLOYMENT_NAME = "gpt-4o-mini"
 EMBEDDING_DEPLOYMENT_NAME = "text-embedding-ada-002"
 
 print("Authenticate User & Login to Azure Cognitive Services")
