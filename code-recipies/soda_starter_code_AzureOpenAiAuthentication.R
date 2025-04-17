@@ -96,7 +96,7 @@ call_openai_api <- function(client, deployment_name, prompt) {
 }
 
 # Define the deployment name
-DEPLOYMENT_NAME <- "gpt-35-turbo-1106"
+DEPLOYMENT_NAME <- "gpt-4o-mini"
 
 # Example usage of the function
 response_json <- call_openai_api(client, DEPLOYMENT_NAME, "Hello, how are you?")
