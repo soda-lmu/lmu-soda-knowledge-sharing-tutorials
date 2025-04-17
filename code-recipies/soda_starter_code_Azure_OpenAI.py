@@ -22,7 +22,7 @@ print("####################################################################")
 
 # Choose the OpenAI model (in Azure OpenAI: the deployment name) you want to use.
 # The deployment needs to be available at the instance set by os.environ["AZURE_OPENAI_ENDPOINT"]
-DEPLOYMENT_NAME = "gpt-35-turbo-1106"
+DEPLOYMENT_NAME = "gpt-4o-mini"
 
 print("Authenticate User & Login to Azure Cognitive Services")
 # Recommendation: Configure your own authentication workflow with environment variables, see the description at
