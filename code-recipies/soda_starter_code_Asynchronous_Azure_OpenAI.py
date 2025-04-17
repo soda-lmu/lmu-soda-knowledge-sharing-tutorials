@@ -30,7 +30,7 @@ token_provider = credential.get_login_token_to_azure_cognitive_services()
 
 # Choose the OpenAI model (in Azure OpenAI: the deployment name) you want to use.
 # The deployment needs to be available at the instance set by os.environ["AZURE_OPENAI_ENDPOINT"]
-DEPLOYMENT_NAME = "gpt-35-turbo-1106"
+DEPLOYMENT_NAME = "gpt-4o-mini"
 
 
 print("Setup completed. Lets get started ...")
