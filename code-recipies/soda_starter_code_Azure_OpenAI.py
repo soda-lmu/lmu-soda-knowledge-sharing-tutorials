@@ -1,7 +1,7 @@
 import os
 
 from dotenv import load_dotenv
-from openai import AzureOpenAI
+from openai import OpenAI
 
 # Option 1: Use httpimport to load 'azure_authentication' package remotely from GitHub without installing it
 import httpimport
@@ -30,20 +30,16 @@ print("Authenticate User & Login to Azure Cognitive Services")
 credential = CredentialFactory().select_credential()
 token_provider = credential.get_login_token_to_azure_cognitive_services()
 
-print("Instantiate Azure OpenAI Client")
-# %% Authentication works in various ways:
-# We can authenticate in three equivalent ways:
-# - pass 'token_provider()' as an argument to 'api_key'
-# - pass 'token_provider()' as an argument to 'azure_ad_token'
-# - pass 'token_provider' as an argument to 'azure_ad_token_provider'. Note that '()' is missing here.
-# For the api_key argument we can either pass an API_KEY or the token_provider() we just created.
-client = AzureOpenAI(
-    azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
+print("Instantiate Azure OpenAI Client (Next Generation v1 API)")
+# %% Authentication with next generation v1 API:
+# The v1 API uses the standard OpenAI client with Azure-specific configuration:
+# - base_url includes the Azure endpoint + "/openai/v1/"
+# - api_key can be either an API key or token_provider() for authentication
+# - No api_version parameter needed for GA features
+# For token-based auth, the OpenAI client now handles automatic token refresh
+client = OpenAI(
+    base_url=f"{os.environ['AZURE_OPENAI_ENDPOINT']}/openai/v1/",
     api_key=token_provider(),  # alternative: insert os.getenv("AZURE_OPENAI_API_KEY")
-    # azure_ad_token=token_provider(),          # same outcome
-    # azure_ad_token_provider=token_provider,   # same outcome again
-    api_version="2024-02-01",  # or use a preview version (e.g., "2024-03-01-preview") for the latest features.
-    # api_version (How-To): https://stackoverflow.com/questions/76475419/how-can-i-select-the-proper-openai-api-version
     timeout=600.0,  # throw APITimeoutError after 10 minutes without a response (default behavior)
 )
 
