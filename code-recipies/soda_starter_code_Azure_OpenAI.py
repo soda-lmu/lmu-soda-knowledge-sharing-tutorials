@@ -34,8 +34,9 @@ print("Instantiate Azure OpenAI Client (Next Generation v1 API)")
 # %% Authentication with next generation v1 API:
 # The v1 API uses the standard OpenAI client with Azure-specific configuration:
 # - base_url includes the Azure endpoint + "/openai/v1/"
-# - api_key can be either an API key or token_provider() for authentication
-# - No api_version parameter needed for generally available (GA) features
+# - api_key can be either an API key or token_provider() for authentication (with or without the "()")
+# - No api_version parameter needed for generally available (GA) features. 
+# --> Though, if API-versions are needed for some reason, check out https://learn.microsoft.com/en-us/azure/ai-foundry/openai/api-version-lifecycle?tabs=entra 
 client = OpenAI(
     base_url=f"{os.environ['AZURE_OPENAI_ENDPOINT']}/openai/v1/",
     api_key=token_provider,  # alternative: insert os.getenv("AZURE_OPENAI_API_KEY")
