@@ -10,7 +10,7 @@ import os
 import time
 
 from dotenv import load_dotenv
-from openai import AsyncAzureOpenAI
+from openai import AsyncOpenAI
 
 import httpimport
 with httpimport.remote_repo('https://raw.githubusercontent.com/soda-lmu/azure-auth-helper-python/main/src'
@@ -42,10 +42,9 @@ print("Setup completed. Lets get started ...")
 # result from the previous request to come in. API requests then run in parallel on a different computer. The
 # results from each API query are later bundled together in a list.
 
-client = AsyncAzureOpenAI(
-    azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
-    api_key=token_provider(),
-    api_version="2024-02-01",
+client = AsyncOpenAI(
+    base_url=f"{os.environ['AZURE_OPENAI_ENDPOINT']}/openai/v1/",
+    api_key=token_provider,
     timeout=600.0,  # throw APITimeoutError after 10 minutes without a response (default behavior)
 )
 
