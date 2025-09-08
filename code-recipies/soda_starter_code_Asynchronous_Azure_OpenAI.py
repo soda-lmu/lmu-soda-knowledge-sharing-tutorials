@@ -44,7 +44,7 @@ print("Setup completed. Lets get started ...")
 
 client = AsyncOpenAI(
     base_url=f"{os.environ['AZURE_OPENAI_ENDPOINT']}/openai/v1/",
-    api_key=token_provider(),
+    api_key=token_provider,
     timeout=600.0,  # throw APITimeoutError after 10 minutes without a response (default behavior)
 )
 

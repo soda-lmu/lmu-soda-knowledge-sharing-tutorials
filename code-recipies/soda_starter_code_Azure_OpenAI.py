@@ -35,11 +35,10 @@ print("Instantiate Azure OpenAI Client (Next Generation v1 API)")
 # The v1 API uses the standard OpenAI client with Azure-specific configuration:
 # - base_url includes the Azure endpoint + "/openai/v1/"
 # - api_key can be either an API key or token_provider() for authentication
-# - No api_version parameter needed for GA features
-# For token-based auth, the OpenAI client now handles automatic token refresh
+# - No api_version parameter needed for generally available (GA) features
 client = OpenAI(
     base_url=f"{os.environ['AZURE_OPENAI_ENDPOINT']}/openai/v1/",
-    api_key=token_provider(),  # alternative: insert os.getenv("AZURE_OPENAI_API_KEY")
+    api_key=token_provider,  # alternative: insert os.getenv("AZURE_OPENAI_API_KEY")
     timeout=600.0,  # throw APITimeoutError after 10 minutes without a response (default behavior)
 )
 
